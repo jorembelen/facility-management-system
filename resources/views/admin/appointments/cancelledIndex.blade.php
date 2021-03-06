@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Open Appointments List')
+@section('title', 'Cancelled Appointments List')
 @section('content') 
 
 <div class="row">
@@ -12,14 +12,13 @@
                     <table id="datatables-reponsive" class="table table-striped dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatables-reponsive_info">
                         <thead>
                             <tr>
-                                <th>Work Order No.</th>
-                                <th>Badge No.</th>
+                                <th>#</th>
                                 <th>Clients Name</th>
-                                <th>Facilities Info</th>
                                 <th>Work Category</th>
                                 <th>Scheduled Date</th>
                                 <th>Scheduled Time</th>
                                 <th>Job Description</th>
+                                <th>Reason</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -27,21 +26,18 @@
                         <tbody>
                             @foreach ($appointments as $appointment)
                                 <tr>
-                                    <td>
+                                    <td> 
                                         <a data-toggle="tooltip" data-placement="top" title="" data-original-title="View Tenant Info" href="{{ route('appointments.show', $appointment->id) }}">{{ $appointment->id }}</a>
                                     </td>
-                                    <td>{{ $appointment->client->badge }}</td>
                                     <td>{{ $appointment->client->name }}</td>
-                                    <td>
-                                        {{ $appointment->building->rc_no }} {{ $appointment->building->ifc_no }} {{ $appointment->building->flat_no }}
-                                        {{ $appointment->building->villa_no }} {{ $appointment->building->lot_no }} {{ $appointment->building->block_no }} 
-                                        {{ $appointment->building->street }} ({{ $appointment->building->description }})
-                                    </td>
                                     <td>{{ $appointment->category->name }}</td>
                                     <td>{{ date('M-d-Y', strtotime($appointment->date)) }}</td>
                                     <td>{{ $appointment->schedule_time }}</td>
                                     <td>
                                         <a data-toggle="tooltip" data-placement="top" title="" data-original-title="View Appointment Details" href="{{ route('client-appointments.show', $appointment->id) }}">{{ Str::limit($appointment->job_description, 200) }}</a>
+                                    </td>
+                                    <td>
+                                        {{ Str::limit($appointment->cancellation_reason, 200) }}
                                     </td>
                                     <td>
                                         @if ($appointment->status == 0)

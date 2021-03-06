@@ -21,12 +21,12 @@ class OccupancyController extends Controller
     public function index(Request $request)
     {
 
-      return  $occupancies = User::find(1004480)->occupancy;
-        // $occupancies = Occupancy::with('tenant')->get();
-        foreach($occupancies as $data)
-        {
-            return $data->tenant;
-        }
+    //   return  $occupancies = User::find(2)->occupancy;
+        $occupancies = Occupancy::with('user')->get();
+        // foreach($occupancies as $data)
+        // {
+        //     return $data->tenant->name;
+        // }
         $total = count(Occupancy::all());
        
         return view('occupancies.index', compact('occupancies', 'total'));

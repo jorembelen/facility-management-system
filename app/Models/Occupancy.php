@@ -23,9 +23,9 @@ class Occupancy extends Model
         'issued_date',
     ];
 
-    public function tenant()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'badge')->withDefault();
+        return $this->belongsTo(User::class);
     }
 
     public function building()

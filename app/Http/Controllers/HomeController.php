@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ClientAppointment;
 use App\Models\Occupancy;
 use App\Models\Occupant;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -43,14 +44,16 @@ class HomeController extends Controller
         if(auth()->user()->role == 'tenant')
         {
             $appointments = ClientAppointment::wherebadge(auth()->user()->badge)->get();
+            $surveyScores = ClientAppointment::wherebadge(auth()->user()->badge)->where('status', 1)->where('survey_status', 0)->get();
             $openAppointments = ClientAppointment::wherebadge(auth()->user()->badge)->where('status', 0)->get();
             $closedAppointments = ClientAppointment::wherebadge(auth()->user()->badge)->where('status', 1)->get();
-            $occupants = Occupant::wherebadge(auth()->user()->badge)->get();
-                foreach($occupants as $item)
-                {
-                    $badge = $item->id;
-                }
-            $unitInfos = Occupancy::whereoccupant_id($badge)->get();
+            $cancelledAppointments = ClientAppointment::wherebadge(auth()->user()->badge)->where('status', 2)->get();
+            // $occupants = User::wherebadge(auth()->user()->badge)->get();
+            //     foreach($occupants as $item)
+            //     {
+            //      return   $badge = $item->id;
+            //     }
+            $unitInfos = Occupancy::whereuser_id(auth()->user()->id)->get();
                 foreach($unitInfos as $data)
                 {
                     $houseInfo = $data;
@@ -58,16 +61,20 @@ class HomeController extends Controller
             $app_created = $appointments->count();
             $open = $openAppointments->count();
             $closed = $closedAppointments->count();
+            $cancelled = $cancelledAppointments->count();
         }else{
             $appointments = ClientAppointment::all()->count();
             $openAppointments = ClientAppointment::where('status', 0)->get();
             $closedAppointments = ClientAppointment::where('status', 1)->get();
+            $cancelledAppointments = ClientAppointment::where('status', 2)->get();
             $houseInfo = null;
+            $surveyScores = null;
             $open = $openAppointments->count();
             $closed = $closedAppointments->count();
+            $cancelled = $cancelledAppointments->count();
             $app_created = $appointments;
         }
 
-        return view('dashboard', compact('houseInfo', 'app_created', 'open', 'closed', 'greetings'));
+        return view('dashboard', compact('houseInfo', 'app_created', 'open', 'closed', 'greetings', 'surveyScores', 'cancelled'));
     }
 }

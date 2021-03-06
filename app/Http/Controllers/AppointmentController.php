@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AppointmentStoreRequest;
 use App\Models\Appointment;
+use App\Models\Building;
 use App\Models\ClientAppointment;
 use App\Models\Employee;
 use App\Models\JobOrder;
@@ -24,10 +25,16 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments = ClientAppointment::latest()->get();
-        // $appointments = ClientAppointment::latest()->get();
+        // $appointments = Building::with('appointments')->get();
+        // $clientBal = Building::whereHas('appointments')->with('appointments')->get();
+        // return $clientBal->count();
+        // $totalPayables = $clientBal->map(function ($bal) {
+        //     return $bal->balance;
+        // })->count();
+
         // foreach($appointments as $d)
         // {
-        //     return $d->occupancy;
+        //     return $d;
         // }
 
         return view('admin.appointments.index', compact('appointments'));
@@ -43,6 +50,12 @@ class AppointmentController extends Controller
     {
         $appointments = ClientAppointment::wherestatus(0)->get();
         return view('admin.appointments.openIndex', compact('appointments'));
+    }
+
+    public function cancelled()
+    {
+        $appointments = ClientAppointment::wherestatus(2)->get();
+        return view('admin.appointments.cancelledIndex', compact('appointments'));
     }
 
     public function allAppointments()
@@ -109,12 +122,12 @@ class AppointmentController extends Controller
      * @param  \App\Models\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function show($badge)
+    public function show($id)
     {
-    //  return   $appointment = Occupant::findOrFail($badge);
+        $appointment = ClientAppointment::findOrFail($id);
     //     $employees = Employee::all();
 
-    //     return view('appointments.create', compact('appointment', 'id', 'employees'));
+        return view('admin.appointments.appointment_details', compact('appointment'));
     }
 
     public function info($badge)

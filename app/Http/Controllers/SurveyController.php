@@ -61,9 +61,11 @@ class SurveyController extends Controller
      * @param  \App\Models\Survey  $survey
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        //
+        $appointment = ClientAppointment::findOrFail($id);
+
+        return view('surveys.view', compact('appointment'));
     }
 
     /**

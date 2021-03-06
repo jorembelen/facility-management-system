@@ -77,5 +77,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
     Route::get('closed-appointments', [AppointmentController::class, 'closed']);
     Route::get('open-appointments', [AppointmentController::class, 'open']);
+    Route::get('cancelled-appointments', [AppointmentController::class, 'cancelled']);
     Route::get('occupant-info/{badge}', [AppointmentController::class, 'info'])->name('client.info');
+    Route::put('cancel-appointment/{id}', [ClientAppointmentController::class, 'cancel'])->name('client-appointment.cancel');
+    Route::put('update-appointment/{id}', [ClientAppointmentController::class, 'updateAppointment'])->name('update');
 });

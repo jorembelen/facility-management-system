@@ -1,46 +1,50 @@
 @extends('layouts.master')
 
-@section('title', 'Details')
+@section('title', 'Update Appointment')
 @section('content') 
 
-
-
-
-  <div class="row">
-    <div class="col-xl-2"></div>
-        <div class="col-lg-6 col-xxl-6">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-action float-right">
-                        <div class="dropdown show">
-                            <a href="javascript:history.back()" class="btn btn-secondary float-right d-print-none "><i class="fas fa-arrow-alt-circle-left"></i> Back</a>
-                        </div>
+<div class="row">
+    <div class="col-xl-3"></div>
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Update {{ $appointment->id }}</h2>
+            </div>
+            <div class="card-body">
+                <form class="form-horizontal form-disabled-button" method="POST" action="{{ route('update', $appointment->id) }}" enctype="multipart/form-data" id="client-app-create">
+                    @csrf
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                    <input type="hidden" name="badge" value="{{ auth()->user()->badge }}">
+                    <input type="hidden" name="work_category_id" value="{{ $appointment->work_category_id }}">
+                    <input type="hidden" name="date" value="{{ $appointment->date }}">
+                    <div class="form-group">
+                        <label class="form-label">Work Category</label>
+                        <h3>{{ $appointment->category->name }}</h3>
                     </div>
-                    <h3 class="card-title mb-0">Appointment Details:</h3>
-                </div>
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-4 col-xxl-3">Work Category:</dt>
-                        <h5>{{ $appointment->category->name }}</h5>
-                    </dl>
-                    <dl class="row">
-                        <dt class="col-4 col-xxl-3">Date:</dt>
-                        <h5>{{ date('M-d-Y', strtotime($appointment->date)) }}</h5>
-                    </dl>
-                    <dl class="row">
-                        <dt class="col-4 col-xxl-3">Scheduled Time:</dt>
-                        <h5>{{ $appointment->schedule_time }}</h5>
-                    </dl>
-                    <dl class="row">
-                        <dt class="col-4 col-xxl-3">Job Description:</dt>
-                        <h5 class="text-justify ml-3 mr-3 mt-2">{{ $appointment->job_description }}</h5>
-                   
-                    </dl>
-                    <dl class="row">
-                    </dl>
-                    
-                    <hr>
-                     
+              
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                       <h3>{{ date('M-d-Y', strtotime($appointment->date)) }}</h3>
+                       </div><hr>
+                    <div class="form-group">
+                        <label class="form-label">Scheduled Time</label>
+                       <h3>{{ $appointment->schedule_time }}</h3>
+                       </div><hr>
+                    <div class="form-group">
+                        <label class="form-label">Job Description</label>
+                        <textarea name="job_description" class="form-control" cols="30" rows="6">{{ $appointment->job_description }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group custom-file-container" data-upload-id="myImage">
+                            <label>Attached Picture(s)<a href="#" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+                            <label class="custom-file-container__custom-file" >
+                                <input type="file" class=" form-controlcustom-file-container__custom-file__custom-file-input" name="images[]"  multiple>
+                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                            </label>
+                            <div class="custom-file-container__image-preview"></div>
+                    </div>
+                      <div class="form-group">
                         <div class="widget-content widget-content-area">
                             <h5>Picture(s)</h5>
                                     <div id="demo-test-gallery" class="demo-gallery" data-pswp-uid="1">
@@ -52,7 +56,7 @@
                                         </a>
                                         @endforeach
                                         @else
-                                    <h5 class="text-center">No Picture(s) Attached</h5>
+                                    <h4 class="ml-4">No Picture(s) Attached</h4>
                                     @endif    
                                     </div>
                                             <!-- Root element of PhotoSwipe. Must have class pswp. -->
@@ -106,60 +110,24 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                    <h5>Document</h5>
-                                    @if(!empty($appointment->documents))
-                                    <li class="list-group-item">
-                                <a class="bs-tooltip" title="Click to download this attachment!" href="{{ url('/uploads/documents/'.$appointment->documents) }}" target="_blank" rel="noopener noreferrer">
-                                <button class="btn btn-danger mb-2 mr-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                                Click to download attached document</button>
-                                </a>
-                            </li>
-                            @else
-                            <h5 class="text-center">No Document Attached!</h5>
-                            @endif
+                                        </div><br>
+                      </div>
+                <div class="form-group mt-3">
+                    <label for="docs">Attached Documents (word/excel/pdf)<span class="text-danger"> </span></label>
+                    <input type="file" class="form-control-file"  name="documents">
                 </div>
-                    
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated spinner-prevent" role="status" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Submitting . . .</div>
+                        <button type="submit" class="btn btn-dark waves-effect waves-light disabled-button-prevent">Submit</button>
+                        <a href="{{ url('client-appointments') }}" type="button" class="btn btn-danger waves-effect disabled-button-prevent">Cancel</a>
+                </form>
             </div>
-            @if (auth()->user()->role == 'tenant')
-                @if ($appointment->status == 0)
-                <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#cancel{{$appointment->id}}">Cancel Appointment</a>
-                <a class="btn btn-warning float-right mr-2" href="{{ route('client-appointments.edit', $appointment->id) }}">Update</a>
-                @endif
-            @endif
         </div>
-        
-    <div class="col-xl-2"></div>
+    </div>
+    <div class="col-xl-3"></div>
 </div>
 
-
-<!-- Cancel Appointment -->
-<div class="modal fade" id="cancel{{ $appointment->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleStandardModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title" id="exampleStandardModalLabel"><i class="align-middle mr-2 far fa-fw fa-frown" style="color:red"></i> Cancel Appointment?</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body m-3">
-            <form class="form-horizontal" method="POST" action="{{ route('client-appointment.cancel', $appointment->id) }}">
-                @csrf
-                <input type="hidden" name="_method" value="PUT">
-            <h4 class="mb-0 text-center">If you are sure, please state your reason & click Yes to proceed!</h4>
-            <div class="form-group mt-2">
-                <textarea name="cancellation_reason" class="form-control" cols="30" rows="3" placeholder="Reason"></textarea>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Yes</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-        </form>
-        </div>
-      </div>
-    </div>
-  </div>
+@include('scripts.client_appointment')
 @endsection

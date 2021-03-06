@@ -12,7 +12,7 @@
                         <div class="illustration-text p-3 m-1">
                             <h4 class="illustration-text">{{ $greetings }}<i class="far fa-fw fa-smile"></i> <br></h4>
                             <h3 class="illustration-text ml-3">{{ Auth::user()->name }}</h3>
-                            @if (auth()->user()->role == 'user')
+                            @if (auth()->user()->role == 'tenant')
                             <hr><h5>Badge Number: {{ auth()->user()->badge }}</h5>
                             <h5>Facilities Info: {{ $houseInfo->building->rc_no }} {{ $houseInfo->building->ifc_no }} {{ $houseInfo->building->flat_no }}
                                {{ $houseInfo->building->villa_no }} {{ $houseInfo->building->lot_no }} {{ $houseInfo->building->block_no }} 
@@ -38,7 +38,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $open }}</h3>
-                        <p class="mb-2">Open Appointments</p>
+                        <a href="/open-appointments"><p class="mb-2">Open Appointments</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                         <div class="stat">
@@ -54,7 +54,24 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $closed }}</h3>
-                        <p class="mb-2">Closed Appointments</p>
+                        <a href="/closed-appointments"><p class="mb-2">Closed Appointments</p></a>
+                    </div>
+                    <div class="d-inline-block ml-3">
+                     <div class="d-inline-block ml-3">
+                        <div class="stat"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle align-middle mr-2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xxl d-flex">
+        <div class="card flex-fill">
+            <div class="card-body py-4">
+                <div class="media">
+                    <div class="media-body">
+                        <h3 class="mb-2">{{ $cancelled }}</h3>
+                        <a href="/cancelled-appointments"><p class="mb-2">Cancelled Appointments</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                      <div class="d-inline-block ml-3">
@@ -71,7 +88,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $app_created }}</h3>
-                        <p class="mb-2">Total Appointments Created</p>
+                        <a href="/appointments"><p class="mb-2">Total Appointments Created</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                         <div class="d-inline-block ml-3">
@@ -83,12 +100,9 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-xxl d-flex">
-     
-    </div>
 </div>
 @endif
-@if (auth()->user()->role == 'user')
+@if (auth()->user()->role == 'tenant')
 <div class="row">
     <div class="col-12 col-sm-6 col-xxl d-flex">
         <div class="card flex-fill">
@@ -96,7 +110,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $open }}</h3>
-                        <p class="mb-2">Open Appointments</p>
+                        <a href="/client-appointments"><p class="mb-2">Open Appointments</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                         <div class="stat">
@@ -112,7 +126,24 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $closed }}</h3>
-                        <p class="mb-2">Closed Appointments</p>
+                        <a href="/client-appointments"><p class="mb-2">Closed Appointments</p></a>
+                    </div>
+                    <div class="d-inline-block ml-3">
+                     <div class="d-inline-block ml-3">
+                        <div class="stat"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle align-middle mr-2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-6 col-xxl d-flex">
+        <div class="card flex-fill">
+            <div class="card-body py-4">
+                <div class="media">
+                    <div class="media-body">
+                        <h3 class="mb-2">{{ $cancelled }}</h3>
+                        <a href="/client-appointments"><p class="mb-2">Cancelled Appointments</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                      <div class="d-inline-block ml-3">
@@ -129,7 +160,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $app_created }}</h3>
-                        <p class="mb-2">Total Appointments Created</p>
+                        <a href="/client-appointments"><p class="mb-2">Total Appointments Created</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                         <div class="d-inline-block ml-3">
@@ -141,10 +172,43 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-xxl d-flex">
-     
-    </div>
 </div>
+
+{{-- Score Survey Table --}}
+@if ($surveyScores->count() > 0)
+<div class="row">
+    <div class="col-12 col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Please Rate Us</h5>
+            </div>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Job Category</th>
+                        <th>Date</th>
+                        <th>Scheduled Time</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                 
+                        @foreach ($surveyScores as $surveyScore)
+                        <tr>
+                        <td>{{ $surveyScore->category->name }}</td>
+                        <td>{{ date('M-d-Y', strtotime($surveyScore->date)) }}</td>
+                        <td>{{ $surveyScore->schedule_time }}</td>
+                        <td>  <span class="badge badge-success">Closed</span></td>
+                        <td><a  href="{{ route('surveys.show', $surveyScore->id) }}"><i class="fas fa-fw fa-star" style="color:green"></i> Give us your rating</a></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @endif
 @endif
 
 @endsection

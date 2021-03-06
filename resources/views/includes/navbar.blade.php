@@ -23,14 +23,14 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="#">Hello! {{ Auth::user()->name }}</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ route('profile.show') }}"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>
+                    <a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault();
+                    {{-- <a class="dropdown-item" href="{{ route('logout') }}"onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">Sign out
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
-                    </a>
+                    </a> --}}
                 </div>
             </li>
         </ul>

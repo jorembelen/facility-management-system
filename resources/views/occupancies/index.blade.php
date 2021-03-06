@@ -27,9 +27,9 @@
                             @foreach ($occupancies as $occupant)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $occupant->tenant->badge }}</td>
+                                    <td>{{ $occupant->user->badge }}</td>
                                     <td>
-                                        <a href="#">{{ $occupant->tenant->name }}</a>
+                                        <a href="#">{{ $occupant->user->name }}</a>
                                         {{-- <a href="{{ route('users.show', $occupant->occupant->id) }}">{{ $occupant->occupant->name }}</a> --}}
                                     </td>
                                     <td>{{ $occupant->building->rc_no }} {{ $occupant->building->ifc_no }} {{ $occupant->building->flat_no }}

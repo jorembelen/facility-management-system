@@ -6,6 +6,7 @@ use App\Http\Requests\OccupantStoreRequest;
 use App\Imports\OccupantsImport;
 use App\Models\Occupancy;
 use App\Models\Occupant;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -21,8 +22,8 @@ class OccupantController extends Controller
     {
        
 
-        $occupants = Occupant::latest()->get();
-        $total = count(Occupant::get());
+        $occupants = User::whererole('tenant')->get();
+        $total = $occupants->count();
        
         return view('occupants.index', compact('occupants', 'total'));
     }

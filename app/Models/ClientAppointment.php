@@ -14,7 +14,7 @@ class ClientAppointment extends Model
     protected $fillable = [
         'id',
         'user_id',
-        'occupancy_id',
+        'building_id',
         'badge',
         'work_category_id',
         'job_description',
@@ -42,10 +42,10 @@ class ClientAppointment extends Model
         return $this->belongsTo(Occupancy::class, 'occupant_id');
     }
 
-    public function survey()
-    {
-        return $this->hasOne(Survey::class, 'work_order');
-    }
+    // public function building()
+    // {
+    //     return $this->belongsTo(Building::class);
+    // }
 
     public static function boot()
     {

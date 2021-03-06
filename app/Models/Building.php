@@ -34,6 +34,11 @@ class Building extends Model
         return $this->hasMany(JobOrder::class);
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(ClientAppointment::class, 'building_id');
+    }
+
     public static function boot()
     {
         parent::boot();
