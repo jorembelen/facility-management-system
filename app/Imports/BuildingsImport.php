@@ -16,6 +16,8 @@ class BuildingsImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Building([
+            'user_id'     => $row['user_id'],
+            'tenant_id'     => $row['tenant_id'],
             'rc_no'     => $row['rc_no'],
             'ifc_no'     => $row['ifc_no'],
             'flat_no'     => $row['flat_no'],

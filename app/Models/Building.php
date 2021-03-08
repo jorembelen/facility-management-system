@@ -12,7 +12,8 @@ class Building extends Model
     public $incrementing = false;
     
     protected $fillable = [
-                'building_code',
+                'user_id',
+                'tenant_id',
                 'rc_no',
                 'ifc_no',
                 'flat_no',
@@ -24,14 +25,24 @@ class Building extends Model
                 'status',
     ];
 
-    public function buildingUser()
+    public function tenant()
     {
-        return $this->belongsTo(Occupant::class);
+        return $this->belongsTo(User::class, 'tenant_id');
+    }
+
+    public function checkout()
+    {
+        return $this->hasOne(Checkout::class, 'building_id');
     }
 
     public function jobOrder()
     {
         return $this->hasMany(JobOrder::class);
+    }
+
+    public function occupancy()
+    {
+        return $this->hasMany(Occupancy::class);
     }
 
     public function appointments()
@@ -43,7 +54,7 @@ class Building extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->id = IdGenerator::generate(['table' => 'buildings', 'length' => 7, 'prefix' =>'SDR-']);
+            $model->id = IdGenerator::generate(['table' => 'buildings', 'length' => 8, 'prefix' =>'SDR-']);
         });
     }
     

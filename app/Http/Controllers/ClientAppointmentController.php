@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CancelAppointmentRequest;
 use App\Http\Requests\ClientAppointmentRequest;
 use App\Http\Requests\ClientGetAppointmentRequest;
+use App\Http\Requests\SurveyRequest;
 use App\Models\Appointment;
 use App\Models\Building;
 use App\Models\ClientAppointment;
 use App\Models\Occupancy;
 use App\Models\Occupant;
 use App\Models\Schedule;
+use App\Models\User;
 use App\Models\WorkCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,7 +34,7 @@ class ClientAppointmentController extends Controller
         return view('clients.index', compact('appointments'));
     }
 
-    public function cancel(Request $request, $id)
+    public function cancel(CancelAppointmentRequest $request, $id)
     {
         $today = Carbon::today();
         $dateAllowed = $today->addDays(1);
@@ -62,7 +65,8 @@ class ClientAppointmentController extends Controller
             $cancel->whereid($id)
             ->update(array(
                 'status' => 2,
-                'cancellation_reason' => $request->cancellation_reason
+                'cancellation_reason' => $request->cancellation_reason,
+                'cancellation_comments' => $request->cancellation_comments
                 ));
             Alert::toast('Your appointment was successfully cancelled!', 'success');
             return redirect('client-appointments');
@@ -84,18 +88,26 @@ class ClientAppointmentController extends Controller
     public function searchSchedule(ClientGetAppointmentRequest $request)
     {
         $categories = WorkCategory::all();
+        $today = Carbon::today();
+        $dateAllowed = $today->addDays(1);
 
         $schedules = Schedule::wherework_category_id($request->category)
         ->where('date', $request->date)
         ->get();
 
-       $date = $request->date;
-       $categoryId = WorkCategory::whereid($request->category)->get();
-       foreach($categoryId as $data)
-       {
-           $categoryName = $data->name;
-           $category_id = $data->id;
-       }
+        if($request->date <= $dateAllowed)
+        {
+            Alert::error('Failed', 'Sorry, You cannot book appointment within 24 hours period!');
+            return back();
+        }else{
+            $date = $request->date;
+            $categoryId = WorkCategory::whereid($request->category)->get();
+            foreach($categoryId as $data)
+            {
+                $categoryName = $data->name;
+                $category_id = $data->id;
+            }
+        }
 
       return view('clients.create', compact('categories', 'schedules', 'date', 'categoryName', 'category_id'));
     }
@@ -111,12 +123,9 @@ class ClientAppointmentController extends Controller
         $data = new ClientAppointment();
         $all_data = $request->all();
 
-        $building_id = Occupancy::whereuser_id(auth()->user()->id)->get();
-        foreach($building_id as $id)
-        {
-            $id = $id->building_id;
-        }
-        $all_data['building_id'] = $id;
+        $building_id = User::findOrFail(auth()->user()->id);
+  
+        $all_data['building_id'] = $building_id->building->id;
 
         $appointments = ClientAppointment::whereuser_id($request->user_id)
         ->where('date', $request->date)
@@ -198,7 +207,10 @@ class ClientAppointmentController extends Controller
         $appointment = ClientAppointment::findOrFail($id);
         $photos = explode('|', $appointment->images);
 
-        return view('clients.view', compact('appointment', 'photos'));
+        $today = Carbon::today();
+        $dateAllowed = $today->addDays(1);
+
+        return view('clients.view', compact('appointment', 'photos', 'dateAllowed', 'dateAllowed'));
     }
 
     /**
@@ -225,7 +237,7 @@ class ClientAppointmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SurveyRequest $request, $id)
     {
         // return $request->all();
         $survey = ClientAppointment::whereid($request->id)

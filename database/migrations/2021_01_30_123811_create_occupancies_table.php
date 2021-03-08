@@ -16,10 +16,10 @@ class CreateOccupanciesTable extends Migration
         Schema::create('occupancies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->string('badge');
+            $table->foreignId('tenant_id')->constrained('users')->nullable();
             $table->string('building_id');
             $table->date('issued_date');
-            $table->date('released_date')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }

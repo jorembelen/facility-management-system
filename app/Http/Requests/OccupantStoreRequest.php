@@ -26,9 +26,8 @@ class OccupantStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|max:50',
-            'email' => 'email',
+            'email' => 'required|email',
             'badge' => 'required|numeric',
-            'cost_center' => 'numeric',
         ];
     }
 }

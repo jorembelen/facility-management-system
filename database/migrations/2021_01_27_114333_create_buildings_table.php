@@ -14,7 +14,9 @@ class CreateBuildingsTable extends Migration
     public function up()
     {
         Schema::create('buildings', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('tenant_id')->constrained('users')->nullable();
             $table->integer('rc_no')->nullable();
             $table->integer('ifc_no')->nullable();
             $table->integer('flat_no')->nullable();
@@ -23,7 +25,7 @@ class CreateBuildingsTable extends Migration
             $table->integer('block_no')->nullable();
             $table->string('street');
             $table->string('description');
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

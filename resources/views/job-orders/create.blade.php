@@ -9,31 +9,28 @@
         <div class="card">
             <div class="card-header">
                 <p>Occupant Name:</p>
-                <h3>{{ $jobOrder->occupant->name }}</h3>
-                <p>Unit Number:</p>
-                <h3>{{ $jobOrder->building->unit_no }}</h3>
+                <h3>{{ $jobOrder->client->name }}</h3>
+                <p>Facility Info:</p>
+                <h3>   {{ $jobOrder->building->rc_no }} {{ $jobOrder->building->ifc_no }} {{ $jobOrder->building->flat_no }}
+                    {{ $jobOrder->building->villa_no }} {{ $jobOrder->building->lot_no }} {{ $jobOrder->building->block_no }} 
+                    {{ $jobOrder->building->street }} ({{ $jobOrder->building->description }})</h3>
+                <p>Work Category:</p>
+                <h3>{{ $jobOrder->category->name }}</h3>
+                <p>Scheduled Date & Time:</p>
+                <h3>{{ date('M-d-Y', strtotime($jobOrder->date)) }}  ({{ $jobOrder->schedule_time }})</h3>
             </div>
             <div class="card-body">
                 <form class="form-horizontal form-disabled-button" method="POST" action="{{ route('job-orders.store') }}" id="job-create">
                     @csrf
                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                    <input type="hidden" name="occupant_id" value="{{ $jobOrder->occupant->id }}">
+                    <input type="hidden" name="occupant_id" value="{{ $jobOrder->client->id }}">
                     <input type="hidden" name="building_id" value="{{ $jobOrder->building->id }}">
                     <div class="form-group">
-                        <label class="form-label">Job Type</label>
-                        <select name="job_type" class="form-control select2">
-                            <option value="">Select...</option>
-                            <option value="Plumbing">Plumbing</option>
-                            <option value="Electrical">Electrical</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Job Category</label>
-                        <select name="job_category" class="form-control select2">
-                            <option value="">Select...</option>
-                            <option value="Leakage">Leakage</option>
-                            <option value="Busted Light">Busted Light</option>
-                            <option value="Busted Light">Flourescent Not Working</option>
+                        <label class="form-label">Technicians</label>
+                        <select name="job_type[]" class="form-control select2" multiple>
+                            @foreach ($employees as $employee)
+                            <option value="{{ $employee->id }}">{{ $employee->badge }} - {{ $employee->name }} ({{ $employee->designation }})</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">

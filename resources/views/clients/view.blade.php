@@ -13,7 +13,11 @@
                 <div class="card-header">
                     <div class="card-action float-right">
                         <div class="dropdown show">
-                            <a href="javascript:history.back()" class="btn btn-secondary float-right d-print-none "><i class="fas fa-arrow-alt-circle-left"></i> Back</a>
+                            @if (auth()->user()->role == 'tenant')
+                            <a href="/client-appointments" class="btn btn-secondary float-right d-print-none "><i class="fas fa-arrow-alt-circle-left"></i> Back</a>
+                            @else
+                            <a href="{{ \URL::previous() }}" class="btn btn-secondary float-right d-print-none "><i class="fas fa-arrow-alt-circle-left"></i> Back</a>
+                            @endif
                         </div>
                     </div>
                     <h3 class="card-title mb-0">Appointment Details:</h3>
@@ -125,7 +129,9 @@
             </div>
             @if (auth()->user()->role == 'tenant')
                 @if ($appointment->status == 0)
-                <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#cancel{{$appointment->id}}">Cancel Appointment</a>
+                    @if ($appointment->date > $dateAllowed)   
+                    <a class="btn btn-primary float-right" href="#" data-toggle="modal" data-target="#cancel{{$appointment->id}}">Cancel Appointment</a>
+                    @endif
                 <a class="btn btn-warning float-right mr-2" href="{{ route('client-appointments.edit', $appointment->id) }}">Update</a>
                 @endif
             @endif
@@ -146,12 +152,20 @@
           </button>
         </div>
         <div class="modal-body m-3">
-            <form class="form-horizontal" method="POST" action="{{ route('client-appointment.cancel', $appointment->id) }}">
+            <form class="form-horizontal" method="POST" action="{{ route('client-appointment.cancel', $appointment->id) }}" id="cancel-create">
                 @csrf
                 <input type="hidden" name="_method" value="PUT">
-            <h4 class="mb-0 text-center">If you are sure, please state your reason & click Yes to proceed!</h4>
+                <h4 class="mb-0 text-center">If you are sure, please select reason & click Yes to proceed!</h4>
             <div class="form-group mt-2">
-                <textarea name="cancellation_reason" class="form-control" cols="30" rows="3" placeholder="Reason"></textarea>
+                <select name="cancellation_reason" class="form-control select2" id="reason_frm" >
+                    <option value="">Select Reason</option>
+                    <option value="Problem Solved">Problem Solved</option>
+                    <option value="Busy, cannot attend appointment">Busy, cannot attend appointment</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+                <div class="form-group mt-2 frm-div" id="selectOthers" style="display:none">
+                <textarea name="cancellation_comments" class="form-control" cols="30" rows="3" placeholder="Comments"></textarea>
             </div>
         </div>
         <div class="modal-footer">
@@ -162,4 +176,8 @@
       </div>
     </div>
   </div>
+
+ 
+ 
+
 @endsection

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         User::create([
             'name' => 'Jorem Belen',
+            'username' => 'jorem.belen',
             'email' => 'jorembelen@gmail.com',
             'role' => 'super_admin',
             'password' => 'password',
@@ -26,17 +27,12 @@ class DatabaseSeeder extends Seeder
         
         User::create([
             'name' => 'Jilbert Mejia',
+            'username' => 'jilbert.mejia',
             'email' => 'jilbert.mejia@rezayat.net',
             'role' => 'super_admin',
             'password' => 'password',
         ]);
 
-        Employee::create([
-            'name' => 'Peter Parker',
-            'badge' => '30012345',
-            'designation' => 'Technician',
-            'mobile' => '0501234567',
-        ]);
         WorkCategory::create([
             'name' => 'Appliance Technican',
         ]);

@@ -11,6 +11,7 @@ use App\Models\JobOrder;
 use App\Models\Occupancy;
 use App\Models\Occupant;
 use App\Models\Survey;
+use App\Models\User;
 use App\Models\WorkCategory;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -25,19 +26,16 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments = ClientAppointment::latest()->get();
-        // $appointments = Building::with('appointments')->get();
-        // $clientBal = Building::whereHas('appointments')->with('appointments')->get();
-        // return $clientBal->count();
-        // $totalPayables = $clientBal->map(function ($bal) {
-        //     return $bal->balance;
-        // })->count();
-
-        // foreach($appointments as $d)
-        // {
-        //     return $d;
-        // }
 
         return view('admin.appointments.index', compact('appointments'));
+    }
+
+    public function emergencyCreate()
+    {
+        $categories = WorkCategory::all();
+        $tenants = User::whererole('tenant')->where('status', 1)->where('is_tenant', 1)->get();
+
+        return view('admin.appointments.emergency', compact('categories', 'tenants'));
     }
 
     public function closed()
@@ -84,10 +82,11 @@ class AppointmentController extends Controller
 
     public function closedAppointment(Request $request)
     {
+        // return $request->all();
         $id = $request->id;
-        $updateStatus = JobOrder::whereid($id)->update(array('status' => 2));
+        $updateStatus = ClientAppointment::whereid($id)->update(array('status' => 1));
 
-        return redirect('/job-orders');
+        return back();
     }
     /**
      * Show the form for creating a new resource.
@@ -125,7 +124,6 @@ class AppointmentController extends Controller
     public function show($id)
     {
         $appointment = ClientAppointment::findOrFail($id);
-    //     $employees = Employee::all();
 
         return view('admin.appointments.appointment_details', compact('appointment'));
     }

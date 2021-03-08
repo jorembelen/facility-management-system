@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Occupants List')
+@section('title', 'Tenants List')
 @section('content') 
 
 <div class="row">
@@ -19,6 +19,8 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Mobile No.</th>
+                                <th>Facilities Info</th>
+                                <th>Check In Date</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -31,15 +33,18 @@
                                     <td>{{ $occupant->name }}</td>
                                     <td>{{ $occupant->email }}</td>
                                     <td>{{ $occupant->mobile }}</td>
-                                <td class="text-center">
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Click</button>
-                                        <div class="dropdown-menu dropdown-menu-right" style="">
-                                            <a class="dropdown-item" href="{{ route('occupants.edit', $occupant->id) }}"><i class="fas fa-fw fa-pencil-alt"></i> Update</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete{{$occupant->id}}"><i class="fas fa-fw fa-trash"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
+                                    <td>
+                                        {{ $occupant->building->id }} - {{ $occupant->building->description }}
+                                    </td>
+                                    <td>{{ date('M-d-Y', strtotime($occupant->occupancy->issued_date)) }}</td>
+                                    <td>
+                                        @if ($tenant->count() > 0)
+                                        <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to Check Out" href="{{ route('checkout.view', $occupant->id) }}"><span class="badge badge-success">Check Out</span></a>
+                                        @else
+                                            <span class="badge badge-danger">Check In</span>
+                                        @endif
+                                    </td>
+                         
                             </tr>
                             @endforeach
                         </tbody>

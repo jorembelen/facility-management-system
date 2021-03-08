@@ -16,6 +16,7 @@
                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                     <input type="hidden" name="badge" value="{{ auth()->user()->badge }}">
                     <input type="hidden" name="work_category_id" value="{{ $category_id }}">
+                    <input type="hidden" name="building_id" value="{{ $category_id }}">
                     <input type="hidden" name="date" value="{{ $date }}">
                     <div class="form-group">
                         <label class="form-label">Work Category</label>

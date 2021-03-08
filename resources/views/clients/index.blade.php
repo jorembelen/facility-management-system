@@ -166,9 +166,15 @@
                                                     <td>
                                                         <a data-toggle="tooltip" data-placement="top" title="" data-original-title="View Appointment Details" href="{{ route('client-appointments.show', $appointment->id) }}">{{ Str::limit($appointment->job_description, 200) }}</a>
                                                     </td>
+                                                    @if ($appointment->cancellation_reason == 'Others')
                                                     <td>
-                                                        {{ Str::limit($appointment->cancellation_reason, 200) }}
+                                                        {{ $appointment->cancellation_reason }} - {{ Str::limit($appointment->cancellation_comments, 200) }}
                                                     </td>
+                                                    @else
+                                                    <td>
+                                                        {{ $appointment->cancellation_reason }}
+                                                    </td>
+                                                    @endif
                                                     <td>
                                                         @if ($appointment->status == 0)
                                                         <span class="badge badge-primary">Open</span>

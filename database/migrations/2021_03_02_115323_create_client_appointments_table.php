@@ -28,7 +28,8 @@ class CreateClientAppointmentsTable extends Migration
             $table->integer('survey_score')->nullable();
             $table->text('survey_comments')->nullable();
             $table->boolean('survey_status')->default(0);
-            $table->text('cancellation_reason')->nullable();
+            $table->string('cancellation_reason')->nullable();
+            $table->text('cancellation_comments')->nullable();
             $table->timestamps();
         });
     }

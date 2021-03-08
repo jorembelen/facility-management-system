@@ -22,10 +22,10 @@ class OccupancyController extends Controller
     {
 
     //   return  $occupancies = User::find(2)->occupancy;
-        $occupancies = Occupancy::with('user')->get();
+        $occupancies = Occupancy::wherestatus(1)->get();
         // foreach($occupancies as $data)
         // {
-        //     return $data->tenant->name;
+        //     return $data->building->street;
         // }
         $total = count(Occupancy::all());
        

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OccupantStoreRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -60,6 +61,20 @@ class UserController extends Controller
 
         $user->create($request->except('role'));
         Alert::toast('User was successfully created!', 'success');
+
+        return back();
+    }
+
+    public function tenantStore(OccupantStoreRequest $request)
+    {
+        $user = new User;
+
+        $data = $request->except('role');
+        $data['role'] = 'tenant';
+        $data['password'] = 'Sadara2021';
+
+        $user->create($data);
+        Alert::toast('Tenant was successfully created!', 'success');
 
         return back();
     }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\JobOrderStoreRequest;
+use App\Models\ClientAppointment;
+use App\Models\Employee;
 use App\Models\JobOrder;
 use App\Models\Occupancy;
 use Illuminate\Http\Request;
@@ -40,12 +42,29 @@ class JobOrderController extends Controller
      */
     public function store(JobOrderStoreRequest $request)
     {
-        // return $request->all();
-        $jobOrder = JobOrder::create($request->all());
-        Alert::toast('New Job Order was successfully created!', 'success');
+        $jobOrder = new JobOrder();
+        $jobOrder->user_id = $request->user_id;
+        $jobOrder->client_appointment_id = $request->client_appointment_id;
+        if($request->filled('new_date')){
+            $jobOrder->date = $request->new_date;
+        }else{
+            $jobOrder->date = $request->date;
+        }
+        if($request->filled('new_time')){
+            $jobOrder->time = $request->new_time;
+        }else{
+            $jobOrder->time = $request->time;
+        }
+        $jobOrder->notes = $request->notes;
+        $jobOrder->technicians = implode(', ', $request->technicians);
+        $jobOrder->save();
 
-        return redirect('/job-orders');
+        Alert::toast('New Schedule was successfully created!', 'success');
+
+        return back();
     }
+
+    
 
     /**
      * Display the specified resource.
@@ -55,13 +74,11 @@ class JobOrderController extends Controller
      */
     public function show($id)
     {
-        $info = Occupancy::wherebuilding_id($id)->get();
-        foreach($info as $data)
-        {
-            $jobOrder = $data;
-        }
+        $jobOrder = ClientAppointment::findOrFail($id);
+        $employees = Employee::latest()->get();
+        $schedules = jobOrder::whereclient_appointment_id($id)->get();
 
-        return view('job-orders.create', compact('jobOrder'));
+        return view('appointments.index', compact('jobOrder', 'employees', 'schedules'));
     }
 
     /**

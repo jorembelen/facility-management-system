@@ -41,8 +41,10 @@
                                     <td>{{ $building->description }}</td>
                                     <td>
                                         @if ($building->status == 1)
-                                            <span class="badge badge-success">Occupied</span>
-                                        @else
+                                            {{-- <span class="badge badge-success">Occupied</span> --}}
+                                            {{-- <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to Check Out" href="{{ route('checkout.view', $building->id) }}"><span class="badge badge-success">Check Out</span></a> --}}
+                                            <span class="badge badge-primary">Occupied</span>
+                                            @else
                                             <span class="badge badge-danger">Vacant</span>
                                         @endif
                                     </td>

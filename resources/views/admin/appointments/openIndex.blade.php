@@ -7,6 +7,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
+                    <a class="btn btn-primary float-right" role="button" href="{{ route('client-appointments.create') }}"><i class="fas fa-plus-circle"></i> Create Appointment</a>
+                              
                      </div>
                 <div class="card-body">
                     <table id="datatables-reponsive" class="table table-striped dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatables-reponsive_info">
@@ -45,11 +47,11 @@
                                     </td>
                                     <td>
                                         @if ($appointment->status == 0)
-                                        <span class="badge badge-primary">Open</span>
+                                            <a href="{{ route('job-orders.show', $appointment->id) }}">  <span class="badge badge-primary">Open</span></a>
                                         @elseif ($appointment->status == 1)
-                                        <span class="badge badge-success">Closed</span>
+                                            <span class="badge badge-success">Closed</span>
                                         @else
-                                        <span class="badge badge-danger">Cancelled</span>
+                                            <span class="badge badge-danger">Cancelled</span>
                                         @endif
                                     </td>
                             </tr>

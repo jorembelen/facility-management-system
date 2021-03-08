@@ -10,14 +10,17 @@
                 <div class="row no-gutters w-100">
                     <div class="col-6">
                         <div class="illustration-text p-3 m-1">
-                            <h4 class="illustration-text">{{ $greetings }}<i class="far fa-fw fa-smile"></i> <br></h4>
-                            <h3 class="illustration-text ml-3">{{ Auth::user()->name }}</h3>
+                            <h4 class="illustration-text text-center">{{ $greetings }}<i class="far fa-fw fa-smile"></i> <br></h4>
+                            <h3 class="illustration-text ml-3 text-center">{{ Auth::user()->name }}</h3>
                             @if (auth()->user()->role == 'tenant')
-                            <hr><h5>Badge Number: {{ auth()->user()->badge }}</h5>
+                            <hr>
+                            <h5>Email: {{ auth()->user()->email }}</h5>
+                            <h5>Mobile No: {{ auth()->user()->mobile }}</h5>
+                            <h5>Badge Number: {{ auth()->user()->badge }}</h5>
                             <h5>Facilities Info: {{ $houseInfo->building->rc_no }} {{ $houseInfo->building->ifc_no }} {{ $houseInfo->building->flat_no }}
                                {{ $houseInfo->building->villa_no }} {{ $houseInfo->building->lot_no }} {{ $houseInfo->building->block_no }} 
                                {{ $houseInfo->building->street }} ({{ $houseInfo->building->description }})</h5>
-                                <h5>Check In Date: {{ date('M-d-Y', strtotime($houseInfo->issued_date)) }}</h5>
+                                <h5>Check In Date: {{ date('M-d-Y', strtotime($houseInfo->occupancy->issued_date)) }}</h5>
                             @endif
                         </div>
                     </div>
@@ -38,7 +41,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $open }}</h3>
-                        <a href="/open-appointments"><p class="mb-2">Open Appointments</p></a>
+                        <a href="/open-appointments"><p class="mb-2">Open Work Orders</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                         <div class="stat">
@@ -54,7 +57,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $closed }}</h3>
-                        <a href="/closed-appointments"><p class="mb-2">Closed Appointments</p></a>
+                        <a href="/closed-appointments"><p class="mb-2">Closed Work Orders</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                      <div class="d-inline-block ml-3">
@@ -71,7 +74,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $cancelled }}</h3>
-                        <a href="/cancelled-appointments"><p class="mb-2">Cancelled Appointments</p></a>
+                        <a href="/cancelled-appointments"><p class="mb-2">Cancelled Work Orders</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                      <div class="d-inline-block ml-3">
@@ -88,7 +91,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $app_created }}</h3>
-                        <a href="/appointments"><p class="mb-2">Total Appointments Created</p></a>
+                        <a href="/appointments"><p class="mb-2">Total Work Orders</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                         <div class="d-inline-block ml-3">
@@ -110,7 +113,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $open }}</h3>
-                        <a href="/client-appointments"><p class="mb-2">Open Appointments</p></a>
+                        <a href="/client-appointments"><p class="mb-2">Open Work Orders</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                         <div class="stat">
@@ -126,7 +129,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $closed }}</h3>
-                        <a href="/client-appointments"><p class="mb-2">Closed Appointments</p></a>
+                        <a href="/client-appointments"><p class="mb-2">Closed Work Orders</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                      <div class="d-inline-block ml-3">
@@ -143,7 +146,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $cancelled }}</h3>
-                        <a href="/client-appointments"><p class="mb-2">Cancelled Appointments</p></a>
+                        <a href="/client-appointments"><p class="mb-2">Cancelled Work Orders</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                      <div class="d-inline-block ml-3">
@@ -160,7 +163,7 @@
                 <div class="media">
                     <div class="media-body">
                         <h3 class="mb-2">{{ $app_created }}</h3>
-                        <a href="/client-appointments"><p class="mb-2">Total Appointments Created</p></a>
+                        <a href="/client-appointments"><p class="mb-2">Total Work Orders</p></a>
                     </div>
                     <div class="d-inline-block ml-3">
                         <div class="d-inline-block ml-3">

@@ -70,6 +70,10 @@
              {!! JsValidator::formRequest('App\Http\Requests\EmployeeUpdateRequest', '#emp-update'); !!}
              {!! JsValidator::formRequest('App\Http\Requests\ClientGetAppointmentRequest', '#req-get'); !!}
              {!! JsValidator::formRequest('App\Http\Requests\ClientAppointmentRequest', '#client-app-create'); !!}
+             {!! JsValidator::formRequest('App\Http\Requests\SurveyRequest', '#survey-create'); !!}
+             {!! JsValidator::formRequest('App\Http\Requests\CancelAppointmentRequest', '#cancel-create'); !!}
+             {!! JsValidator::formRequest('App\Http\Requests\CheckoutRequest', '#checkout'); !!}
+             {!! JsValidator::formRequest('App\Http\Requests\CheckinRequest', '#checkin'); !!}
   
 
     <script>
@@ -121,33 +125,33 @@
 	});
 </script>
 
-{{-- <script>
+<script>
 
-	$(function() {
-		
-		// run on change for the selectbox
-		
-		$( "#search_frm" ).change(function() {  
-			searchDivs();
-		});
-		
-		// handle the updating of the duration divs
-		function searchDivs() {
-			// hide all form-duration-divs
-			$('.frm-div').hide();
-			  
-			  // for Leave
-			var witKey = $( "#search_frm option:selected" ).val();                
-			$('#select'+witKey).show();
-	
-		}        
-	
-		// run at load, for the currently selected div to show up
-		searchDivs();
-	
-	});
-	
-	</script> --}}
+    $(function() {
+        
+        // run on change for the selectbox
+        
+        $( "#reason_frm" ).change(function() {  
+            witnessDivs();
+        });
+        
+        // handle the updating of the duration divs
+        function witnessDivs() {
+            // hide all form-duration-divs
+            $('.frm-div').hide();
+              
+              // for Leave
+            var witKey = $( "#reason_frm option:selected" ).val();                
+            $('#select'+witKey).show();
+    
+        }        
+    
+        // run at load, for the currently selected div to show up
+        witnessDivs();
+    
+    });
+    
+    </script>
 
 </body>
 

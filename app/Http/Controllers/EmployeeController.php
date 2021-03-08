@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmployeeStoreRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
+use App\Imports\EmployeesImport;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
@@ -20,6 +22,20 @@ class EmployeeController extends Controller
         $employees = Employee::latest()->get();
 
         return view('employees.index', compact('employees'));
+    }
+
+    public function importIndex()
+    {
+        return view('employees.import');
+    }
+
+    public function import(Request $request)
+    {
+        $validator = Excel::import(new EmployeesImport,request()->file('file'));
+        
+        Alert::success('Success', 'Employees Imported Successfully!');
+           
+        return back();
     }
 
     /**

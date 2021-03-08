@@ -3,12 +3,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title" id="myModalLabel"><i class="fas fa-fw fa-user-plus"></i> Add Occupant</h3>
+                        <h3 class="modal-title" id="myModalLabel"><i class="fas fa-fw fa-user-plus"></i> Add Tenant</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body">
 
-                            <form class="form-horizontal form-disabled-button" method="POST" action="{{ route('occupants.store') }}" id="occ-create">
+                            <form class="form-horizontal form-disabled-button" method="POST" action="{{ route('tenant.create') }}" id="occ-create">
                                 @csrf
                                 <input type="hidden" name="category" value="product">
                                 <div class="form-group row">
@@ -33,22 +33,6 @@
                                     <label for="create-name" class="col-md-4 ml-3 col-form-label">Mobile Number</label>
                                     <div class="col-md-11 ml-3">
                                         <input type="text" class="form-control" name="mobile" placeholder="mobile number">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="create-name" class="col-md-4 ml-3 col-form-label">Cost Center</label>
-                                    <div class="col-md-11 ml-3">
-                                        <input type="text" class="form-control" name="cost_center" placeholder="Cost Center">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="create-name" class="col-md-4 ml-3 col-form-label">Cost Center</label>
-                                    <div class="col-md-11 ml-3">
-                                        <select name="status_desc" class="form-control">
-                                            <option value="">Select...</option>
-                                            <option value="Single">Single</option>
-                                            <option value="Family">Family</option>
-                                        </select>
                                     </div>
                                 </div>
                     </div>

@@ -23,6 +23,7 @@
                         <li class="sidebar-item"><a class="sidebar-link" href="/schedules">Schedules</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="#">Reports</a></li>
             @if(auth()->user()->role == 'super_admin' || auth()->user()->role == 'admin')
+            <li class="sidebar-item"><a class="sidebar-link" href="/employees">Employees</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="/users">Users</a></li>
             @endif
                     </ul>
@@ -33,9 +34,11 @@
                         <i class="align-middle" data-feather="home"></i> <span class="align-middle">Facilities</span>
                     </a>
                     <ul id="facilities" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
-                        <li class="sidebar-item"><a class="sidebar-link" href="/occupancies">Occupancies List</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="/occupants">Tenants List</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="/tenants-checkin">Vacant Facilities</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="/tenants-checkout">Checked Out History</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="/facilities">Facilities List</a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="/occupants">Occupants List</a></li>
+                        {{-- <li class="sidebar-item"><a class="sidebar-link" href="/occupancies">Occupancies List</a></li> --}}
                     </ul>
                 </li>
 <li class="sidebar-item {{ (request()->segment(1) == 'open-appointments' || request()->segment(1) == 'closed-appointments' || request()->segment(1) == 'cancelled-appointments' || request()->segment(1) == 'appointments') ? 'active' : '' }}">
@@ -47,6 +50,7 @@
                         <li class="sidebar-item"><a class="sidebar-link" href="/closed-appointments">Closed</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="/cancelled-appointments">Cancelled</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="/appointments">All</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="/emergency-appointment">Emergency Appointment</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="#">Reports</a></li>
                     </ul>
                 </li>
@@ -58,11 +62,11 @@
                             <i class="align-middle" data-feather="upload"></i> <span class="align-middle">Uploads</span>
                         </a>
                         <ul id="imports" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
-                            <li class="sidebar-item"><a class="sidebar-link" href="/occupants-import">Import Occupants</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="/buildings-import">Import Buildings</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="/users-import">Import Users</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="/buildings-import">Import Facilities</a></li>
                             <li class="sidebar-item"><a class="sidebar-link" href="/occupancies-import">Import Occupancies</a></li>
                             <li class="sidebar-item"><a class="sidebar-link" href="/schedules-import">Import Schedules</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="/users-import">Import Users</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="/employees-import">Import Employees</a></li>
                         </ul>
                     </li>
                     @endif  

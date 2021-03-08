@@ -21,17 +21,21 @@ class JobOrder extends Model
         'status',
     ];
 
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->id = IdGenerator::generate(['table' => 'job_orders', 'length' => 8, 'prefix' =>'SDR-']);
-        });
-    }
+    // public static function boot()
+    // {
+    //     parent::boot();
+    //     self::creating(function ($model) {
+    //         $model->id = IdGenerator::generate(['table' => 'job_orders', 'length' => 8, 'prefix' =>'SDR-']);
+    //     });
+    // }
 
     public function occupant()
     {
         return $this->belongsTo(Occupant::class);
+    }
+    public function clientAppointment()
+    {
+        return $this->belongsTo(ClientAppointment::class);
     }
     public function building()
     {

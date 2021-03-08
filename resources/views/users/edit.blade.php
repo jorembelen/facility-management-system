@@ -38,6 +38,22 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="name" class="col-md-3 mt-1 ml-1 col-form-label">Status</label>
+                    <div class="col-md-8 mt-1">
+                        <select name="role" class="form-control select2">
+                            <option value="{{ $user->status }}">
+                                @if ($user->status == 0)
+                                   Inactive 
+                                @else
+                                    Active
+                                @endif
+                            </option>
+                            <option value="0">Inactive</option>
+                            <option value="1">Active</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="email" class="col-md-3 mt-1 ml-1 col-form-label">Email</label>
                     <div class="col-md-8 mt-1">
                         <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}" placeholder="Email">

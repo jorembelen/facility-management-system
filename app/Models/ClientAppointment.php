@@ -23,6 +23,7 @@ class ClientAppointment extends Model
         'images',
         'date',
         'documents',
+        'cancellation_comments',
     ];
 
     public function category()
@@ -42,10 +43,10 @@ class ClientAppointment extends Model
         return $this->belongsTo(Occupancy::class, 'occupant_id');
     }
 
-    // public function building()
-    // {
-    //     return $this->belongsTo(Building::class);
-    // }
+    public function jobOrder()
+    {
+        return $this->hasMany(JobOrder::class);
+    }
 
     public static function boot()
     {

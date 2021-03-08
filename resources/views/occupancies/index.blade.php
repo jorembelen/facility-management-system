@@ -27,15 +27,15 @@
                             @foreach ($occupancies as $occupant)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $occupant->user->badge }}</td>
+                                    <td>{{ $occupant->tenant->badge }}</td>
                                     <td>
-                                        <a href="#">{{ $occupant->user->name }}</a>
-                                        {{-- <a href="{{ route('users.show', $occupant->occupant->id) }}">{{ $occupant->occupant->name }}</a> --}}
+                                        <a href="#">{{ $occupant->tenant->name }}</a>
+                                        {{-- <a href="{{ route('tenants.show', $occupant->occupant->id) }}">{{ $occupant->occupant->name }}</a> --}}
                                     </td>
-                                    <td>{{ $occupant->building->rc_no }} {{ $occupant->building->ifc_no }} {{ $occupant->building->flat_no }}
+                                    {{-- <td>{{ $occupant->building->rc_no }} {{ $occupant->building->ifc_no }} {{ $occupant->building->flat_no }}
                                         {{ $occupant->building->villa_no }} {{ $occupant->building->lot_no }} {{ $occupant->building->block_no }} 
-                                        {{ $occupant->building->street }}</td>
-                                    <td>{{ $occupant->building->description }}</td>
+                                        {{ $occupant->building->street }}</td> --}}
+                                    <td>{{ $occupant->building }}</td>
                                     <td>{{ $occupant->issued_date->format('M-d-Y')}}</td>
                                 <td class="text-center">
                                     <div class="input-group-append">

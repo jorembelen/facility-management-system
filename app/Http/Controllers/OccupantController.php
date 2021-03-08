@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CheckinRequest;
 use App\Http\Requests\OccupantStoreRequest;
 use App\Imports\OccupantsImport;
+use App\Models\Building;
+use App\Models\Checkout;
 use App\Models\Occupancy;
 use App\Models\Occupant;
 use App\Models\User;
@@ -21,11 +24,54 @@ class OccupantController extends Controller
     public function index(Request $request)
     {
        
-
-        $occupants = User::whererole('tenant')->get();
+        $tenant = User::wherehas('occupancy')->get();
+        $occupants = User::whererole('tenant')->where('status', 1)->where('is_tenant', 1)->latest()->get();
         $total = $occupants->count();
        
-        return view('occupants.index', compact('occupants', 'total'));
+        return view('occupants.index', compact('occupants', 'total', 'tenant'));
+    }
+
+    public function checkout()
+    {
+       
+        $checkout = Checkout::latest()->get();
+      
+        return view('occupants.checkout', compact('checkout'));
+    }
+
+    public function checkin()
+    {
+        $buildings = Building::wherestatus(0)->get();
+        
+        return view('checkin.index', compact('buildings'));
+    }
+    
+    public function checkinTenant($id)
+    {
+        $facility = Building::findOrFail($id);
+        $tenants = User::whererole('tenant')->where('is_tenant', 0)->get();
+
+        return view('checkin.create', compact('tenants', 'facility'));
+    }
+
+    public function checkinStore(CheckinRequest $request)
+    {
+        $checkin = new Occupancy();
+
+        $data = $request->all();;
+        $checkin->create($data);
+
+        // Update Tenant
+        $user = User::whereid($request->tenant_id)
+        ->update(array('is_tenant' => 1, 'status' => 1));
+
+        // Update Facility Status
+        $user = Building::whereid($request->building_id)
+        ->update(array('status' => 1, 'tenant_id' => $request->tenant_id));
+
+        Alert::toast('Tenant was Checked In successfully!', 'success');
+
+        return redirect('tenants-checkin');
     }
 
     public function search(Request $request)

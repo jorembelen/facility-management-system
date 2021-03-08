@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Building;
 use App\Models\ClientAppointment;
 use App\Models\Occupancy;
 use App\Models\Occupant;
@@ -53,11 +54,11 @@ class HomeController extends Controller
             //     {
             //      return   $badge = $item->id;
             //     }
-            $unitInfos = Occupancy::whereuser_id(auth()->user()->id)->get();
-                foreach($unitInfos as $data)
-                {
-                    $houseInfo = $data;
-                }
+            $houseInfo = User::findOrFail(auth()->user()->id);
+                // foreach($unitInfos as $data)
+                // {
+                //     $houseInfo = $data;
+                // }
             $app_created = $appointments->count();
             $open = $openAppointments->count();
             $closed = $closedAppointments->count();

@@ -26,11 +26,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'mobile',
         'badge',
         'role',
         'email',
         'password',
+        'is_tenant',
     ];
 
     /**
@@ -74,7 +76,17 @@ class User extends Authenticatable
     
     public function occupancy()
     {
-        return $this->hasOne(Occupancy::class);
+        return $this->hasOne(Occupancy::class, 'tenant_id');
+    }
+
+    public function checkout()
+    {
+        return $this->hasOne(Checkout::class, 'tenant_id');
+    }
+
+    public function building()
+    {
+        return $this->hasOne(Building::class, 'tenant_id');
     }
 
 }

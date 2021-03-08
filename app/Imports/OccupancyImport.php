@@ -27,7 +27,7 @@ class OccupancyImport implements ToModel, WithHeadingRow
     {
         return new Occupancy([
             'user_id'     => $row['user_id'],
-            'badge'     => $row['badge'],
+            'tenant_id'     => $row['tenant_id'],
             'building_id'     => $row['building_id'],
             'issued_date'     => $this->transformDate($row['issued_date']),
         ]);

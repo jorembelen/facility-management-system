@@ -19,6 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->string('designation');
             $table->string('mobile')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

@@ -22,6 +22,7 @@ class UsersImport implements ToModel, WithHeadingRow
             'mobile'     => $row['mobile'],
             'password'     => $row['password'],
             'role'     => $row['role'],
+            'is_tenant'     => $row['is_tenant'],
         ]);
     }
 }

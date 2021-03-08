@@ -7,6 +7,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
+                     <a class="btn btn-primary float-right" role="button" href="{{ route('client-appointments.create') }}"><i class="fas fa-plus-circle"></i> Create Appointment</a>
+                              
                      </div>
                 <div class="card-body">
                     <table id="datatables-reponsive" class="table table-striped dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatables-reponsive_info">

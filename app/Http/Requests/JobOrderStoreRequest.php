@@ -24,11 +24,10 @@ class JobOrderStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|max:50',
-            'building_id' => 'required|max:50',
-            'job_type' => 'required|max:50',
-            'job_category' => 'required|max:50',
-            'notes' => 'required',
+            'user_id' => 'required',
+            'client_appointment_id' => 'required',
+            'technicians' => 'required',
         ];
     }
+
 }

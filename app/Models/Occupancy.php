@@ -11,26 +11,25 @@ class Occupancy extends Model
     use HasFactory;
 
     protected $dates = [
-        'released_date',
         'issued_date'
     ];
 
     protected $fillable = [
         'user_id',
-        'badge',
+        'tenant_id',
         'building_id',
-        'released_date',
         'issued_date',
+        'remarks',
     ];
 
-    public function user()
+    public function tenant()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'tenant_id');
     }
 
     public function building()
     {
-        return $this->belongsTo(Building::class);
+        return $this->belongsTo(Building::class, 'building_id');
     }
 
     
