@@ -6,9 +6,7 @@
 <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                     <a class="btn btn-primary float-right" role="button" href="{{ route('client-appointments.create') }}"><i class="fas fa-plus-circle"></i> Create Appointment</a>
-                              
+                <div class="card-header">      
                      </div>
                 <div class="card-body">
                     <table id="datatables-reponsive" class="table table-striped dataTable no-footer dtr-inline" style="width: 100%;" role="grid" aria-describedby="datatables-reponsive_info">
@@ -60,21 +58,25 @@
                                     <td>
                                         @if ($appointment->status == 1)
                                         @if ($appointment->survey_status == 0)
-                                        <a  href="{{ route('surveys.show', $appointment->id) }}"><i class="fas fa-fw fa-star" style="color:green"></i> Give us your rating</a>
-                                        @else
-                                            @if ($appointment->survey_score == 1)
-                                            <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Poor</a>
-                                            @elseif($appointment->survey_score == 2)
-                                            <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Needs Improvement</a>
-                                            @elseif($appointment->survey_score == 3)
-                                                <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Satisfactory</a>
-                                            @elseif($appointment->survey_score == 4)
-                                            <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Very Good</a>
-                                            @elseif($appointment->survey_score == 5)
-                                            <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Excellent</a>
-                                            @else 
+                                        @if (auth()->user()->role == 'tenant')
+                                            <a  href="{{ route('surveys.show', $appointment->id) }}"><i class="fas fa-fw fa-star" style="color:green"></i> Give us your rating</a>
+                                            @else
+                                            <a  href="#"><i class="fas fa-fw fa-star" style="color:green"></i> No Rating</a>
                                             @endif
-                                        @endif
+                                            @else
+                                                @if ($appointment->survey_score == 1)
+                                                <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Poor</a>
+                                                @elseif($appointment->survey_score == 2)
+                                                <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Needs Improvement</a>
+                                                @elseif($appointment->survey_score == 3)
+                                                    <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Satisfactory</a>
+                                                @elseif($appointment->survey_score == 4)
+                                                <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Very Good</a>
+                                                @elseif($appointment->survey_score == 5)
+                                                <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Excellent</a>
+                                                @else 
+                                                @endif
+                                            @endif
                                     @endif
                                     </td>
                             </tr>

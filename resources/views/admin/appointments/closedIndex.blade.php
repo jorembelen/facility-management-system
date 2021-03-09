@@ -57,24 +57,24 @@
                                         @if ($appointment->status == 1)
                                         @if ($appointment->survey_status == 0)
                                         @if (auth()->user()->role == 'tenant')
-                                        <a  href="{{ route('surveys.show', $appointment->id) }}"><i class="fas fa-fw fa-star" style="color:green"></i> Give us your rating</a>
-                                        @else
-                                        <a  href="#"><i class="fas fa-fw fa-star" style="color:green"></i> No Rating</a>
-                                        @endif
-                                        @else
-                                            @if ($appointment->survey_score == 1)
-                                            <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Poor</a>
-                                            @elseif($appointment->survey_score == 2)
-                                            <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Needs Improvement</a>
-                                            @elseif($appointment->survey_score == 3)
-                                                <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Satisfactory</a>
-                                            @elseif($appointment->survey_score == 4)
-                                            <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Very Good</a>
-                                            @elseif($appointment->survey_score == 5)
-                                            <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Excellent</a>
-                                            @else 
+                                            <a  href="{{ route('surveys.show', $appointment->id) }}"><i class="fas fa-fw fa-star" style="color:green"></i> Give us your rating</a>
+                                            @else
+                                            <a  href="#"><i class="fas fa-fw fa-star" style="color:green"></i> No Rating</a>
                                             @endif
-                                        @endif
+                                            @else
+                                                @if ($appointment->survey_score == 1)
+                                                <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Poor</a>
+                                                @elseif($appointment->survey_score == 2)
+                                                <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Needs Improvement</a>
+                                                @elseif($appointment->survey_score == 3)
+                                                    <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Satisfactory</a>
+                                                @elseif($appointment->survey_score == 4)
+                                                <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Very Good</a>
+                                                @elseif($appointment->survey_score == 5)
+                                                <a href="{{ route('surveys.edit', $appointment->id) }}"> {{ $appointment->survey_score }} - Excellent</a>
+                                                @else 
+                                                @endif
+                                            @endif
                                     @endif
                                     </td>
                             </tr>

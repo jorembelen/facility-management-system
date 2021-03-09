@@ -8,14 +8,16 @@
     <div class="col-xl-6">
         <div class="card">
             <div class="card-header">
-                <h2 class="text-center">Create Appointment</h2>
+                <h2 class="text-center">Create Emergency Appointment</h2>
             </div>
             <div class="card-body">
-                <form class="form-horizontal form-disabled-button" method="POST" action="{{ route('client-appointments.store') }}" enctype="multipart/form-data" id="client-app-create">
+                <form class="form-horizontal form-disabled-button" method="POST" action="{{ route('emergency.store') }}"  id="client-app-create">
                     @csrf
+                    <input type="hidden" name="scheduler_id" value="{{ auth()->user()->id }}">
+                    <input type="hidden" name="work_category_id" value="8">
                     <div class="form-group">
                         <label class="form-label">Select Tenant</label>
-                        <select name="job_type[]" class="form-control select2">
+                        <select name="user_id" class="form-control select2">
                             <option value=""></option>
                             @foreach ($tenants as $tenant)
                             <option value="{{ $tenant->id }}">{{ $tenant->badge }} - {{ $tenant->name }} ({{ $tenant->building->id }})</option>
@@ -23,12 +25,18 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Job Category</label>
-                        <select name="job_type[]" class="form-control select2">
+                        <label class="form-label">Emergency Type</label>
+                        <select name="emergency_type" class="form-control select2">
                             <option value=""></option>
-                            @foreach ($categories as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
+                            <option value="House Fire or complete failure of firefighting equipment in any apartment building">House Fire or complete failure of firefighting equipment in any apartment building</option>
+                            <option value="Failure of Firefighting Equipment">Failure of Firefighting Equipment</option>
+                            <option value="Complete Electrical Failure">Complete Electrical Failure</option>
+                            <option value="Water Leak from main line inside the house">Water Leak from main line inside the house</option>
+                            <option value="Sewer line blockage">Sewer line blockage</option>
+                            <option value="Lockout of Garage Door">Lockout of Garage Door</option>
+                            <option value="Houses/Facilities Lockout">Houses/Facilities Lockout</option>
+                            <option value="Complete Failure of Refrigerator">Complete Failure of Refrigerator</option>
+                            <option value="Elevator Failure">Elevator Failure</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -37,7 +45,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Time</label>
-                        <input type="text" class="form-control name="time" placeholder="time">
+                        <input type="text" class="form-control" name="schedule_time" placeholder="schedule time">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Job Description</label>

@@ -16,8 +16,8 @@ class CreateClientAppointmentsTable extends Migration
         Schema::create('client_appointments', function (Blueprint $table) {
             $table->uuid('id')->primary()->unique();
             $table->foreignId('user_id')->constrained('users');
+            $table->string('scheduler_id')->nullable();
             $table->string('building_id');
-            $table->string('badge');
             $table->bigInteger('work_category_id')->unsigned();
             $table->string('schedule_time');
             $table->text('job_description');
@@ -30,6 +30,7 @@ class CreateClientAppointmentsTable extends Migration
             $table->boolean('survey_status')->default(0);
             $table->string('cancellation_reason')->nullable();
             $table->text('cancellation_comments')->nullable();
+            $table->string('emergency_type')->nullable();
             $table->timestamps();
         });
     }

@@ -46,6 +46,8 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
+        Fortify::verifyEmailView(fn () => view('auth.verify-email'));
+        
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)
                 ->orWhere('username', $request->email)

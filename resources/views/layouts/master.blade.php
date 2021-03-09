@@ -74,6 +74,7 @@
              {!! JsValidator::formRequest('App\Http\Requests\CancelAppointmentRequest', '#cancel-create'); !!}
              {!! JsValidator::formRequest('App\Http\Requests\CheckoutRequest', '#checkout'); !!}
              {!! JsValidator::formRequest('App\Http\Requests\CheckinRequest', '#checkin'); !!}
+             {!! JsValidator::formRequest('App\Http\Requests\ResetpasswordRequest', '#reset'); !!}
   
 
     <script>

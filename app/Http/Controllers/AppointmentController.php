@@ -38,6 +38,21 @@ class AppointmentController extends Controller
         return view('admin.appointments.emergency', compact('categories', 'tenants'));
     }
 
+    public function emergencyStore(Request $request)
+    {
+        $data = new ClientAppointment();
+        $all_data = $request->all();
+
+        $building_id = User::findOrFail($request->user_id);
+  
+        $all_data['building_id'] = $building_id->building->id;
+
+        $emAppointment = ClientAppointment::create($all_data);
+        Alert::toast('Your appointment was successfully cancelled!', 'success');
+
+        return redirect('open-appointments');
+    }
+
     public function closed()
     {
         $appointments = ClientAppointment::wherestatus(1)->get();

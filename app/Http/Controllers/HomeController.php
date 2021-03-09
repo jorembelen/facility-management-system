@@ -8,6 +8,7 @@ use App\Models\Occupancy;
 use App\Models\Occupant;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -42,14 +43,20 @@ class HomeController extends Controller
             $greetings = "Good Night";
         }
         
+            // Check if the user password is the default then the will be force to reset pw
+        $pw = auth()->user()->password;
+        if(Hash::check('Sadara2021', $pw)){
+            return redirect(route('reset'));
+        }else{
+
         if(auth()->user()->role == 'tenant')
         {
-            $appointments = ClientAppointment::wherebadge(auth()->user()->badge)->get();
-            $surveyScores = ClientAppointment::wherebadge(auth()->user()->badge)->where('status', 1)->where('survey_status', 0)->get();
-            $openAppointments = ClientAppointment::wherebadge(auth()->user()->badge)->where('status', 0)->get();
-            $closedAppointments = ClientAppointment::wherebadge(auth()->user()->badge)->where('status', 1)->get();
-            $cancelledAppointments = ClientAppointment::wherebadge(auth()->user()->badge)->where('status', 2)->get();
-            // $occupants = User::wherebadge(auth()->user()->badge)->get();
+            $appointments = ClientAppointment::whereuser_id(auth()->user()->id)->get();
+            $surveyScores = ClientAppointment::whereuser_id(auth()->user()->id)->where('status', 1)->where('survey_status', 0)->get();
+            $openAppointments = ClientAppointment::whereuser_id(auth()->user()->id)->where('status', 0)->get();
+            $closedAppointments = ClientAppointment::whereuser_id(auth()->user()->id)->where('status', 1)->get();
+            $cancelledAppointments = ClientAppointment::whereuser_id(auth()->user()->id)->where('status', 2)->get();
+            // $occupants = User::whereuser_id(auth()->user()->id)->get();
             //     foreach($occupants as $item)
             //     {
             //      return   $badge = $item->id;
@@ -75,6 +82,7 @@ class HomeController extends Controller
             $cancelled = $cancelledAppointments->count();
             $app_created = $appointments;
         }
+    }
 
         return view('dashboard', compact('houseInfo', 'app_created', 'open', 'closed', 'greetings', 'surveyScores', 'cancelled'));
     }

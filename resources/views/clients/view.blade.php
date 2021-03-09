@@ -27,6 +27,12 @@
                         <dt class="col-4 col-xxl-3">Work Category:</dt>
                         <h5>{{ $appointment->category->name }}</h5>
                     </dl>
+                    @if ($appointment->emergency_type)  
+                    <dl class="row">
+                        <dt class="col-4 col-xxl-3">Emergency Type:</dt>
+                        <h5>{{ $appointment->emergency_type }}</h5>
+                    </dl>
+                    @endif
                     <dl class="row">
                         <dt class="col-4 col-xxl-3">Date:</dt>
                         <h5>{{ date('M-d-Y', strtotime($appointment->date)) }}</h5>
@@ -36,9 +42,10 @@
                         <h5>{{ $appointment->schedule_time }}</h5>
                     </dl>
                     <dl class="row">
-                        <dt class="col-4 col-xxl-3">Job Description:</dt>
+                        <dt class="col-4 col-xxl-3"><i class="align-middle mr-2 fas fa-fw fa-arrow-down"></i> Job Description:</dt>
+                    </dl>
+                    <dl class="row">
                         <h5 class="text-justify ml-3 mr-3 mt-2">{{ $appointment->job_description }}</h5>
-                   
                     </dl>
                     <dl class="row">
                     </dl>

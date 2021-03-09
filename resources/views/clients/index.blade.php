@@ -34,7 +34,7 @@
                 
                                     <tbody>
                                         @foreach ($appointments as $appointment)
-                                        @if (auth()->user()->badge == $appointment->badge)         
+                                        @if (auth()->user()->id == $appointment->user_id)         
                                         @if ($appointment->status == 0)         
                                                 <tr>
                                                     <td>{{ $appointment->id }}</td>
@@ -85,7 +85,7 @@
                 
                                     <tbody>
                                         @foreach ($appointments as $appointment)
-                                        @if (auth()->user()->badge == $appointment->badge)         
+                                         @if (auth()->user()->id == $appointment->user_id)         
                                         @if ($appointment->status == 1)         
                                                 <tr>
                                                     <td>{{ $appointment->id }}</td>
@@ -156,7 +156,7 @@
                 
                                     <tbody>
                                         @foreach ($appointments as $appointment)
-                                        @if (auth()->user()->badge == $appointment->badge)         
+                                         @if (auth()->user()->id == $appointment->user_id)         
                                         @if ($appointment->status == 2)         
                                                 <tr>
                                                     <td>{{ $appointment->id }}</td>

@@ -15,7 +15,7 @@ class ClientAppointment extends Model
         'id',
         'user_id',
         'building_id',
-        'badge',
+        'scheduler_id',
         'work_category_id',
         'job_description',
         'schedule_time',
@@ -24,6 +24,7 @@ class ClientAppointment extends Model
         'date',
         'documents',
         'cancellation_comments',
+        'emergency_type',
     ];
 
     public function category()

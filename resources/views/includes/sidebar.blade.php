@@ -5,7 +5,7 @@
             
         <ul class="sidebar-nav">
             <li class="sidebar-header">
-                Pages
+                Navigate
             </li>
             <li class="sidebar-item {{ (request()->segment(1) == 'dashboard') ? 'active' : '' }}">
                 <a class="sidebar-link" href="/dashboard">
@@ -34,8 +34,8 @@
                         <i class="align-middle" data-feather="home"></i> <span class="align-middle">Facilities</span>
                     </a>
                     <ul id="facilities" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
-                        <li class="sidebar-item"><a class="sidebar-link" href="/occupants">Tenants List</a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="/tenants-checkin">Vacant Facilities</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="/occupants">Check Out</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="/tenants-checkin">Check In</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="/tenants-checkout">Checked Out History</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="/facilities">Facilities List</a></li>
                         {{-- <li class="sidebar-item"><a class="sidebar-link" href="/occupancies">Occupancies List</a></li> --}}
@@ -77,12 +77,7 @@
                     Appointments</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle align-middle mr-2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                    Help</span>
-                </a>
-            </li>
+
             @endif
 
             @if(auth()->user()->role == 'representative')
@@ -96,7 +91,12 @@
                 </ul>
             </li>
             @endif 
-
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle align-middle mr-2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    Help</span>
+                </a>
+            </li>
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out align-middle mr-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>

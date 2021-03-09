@@ -6,23 +6,20 @@
 
         <x-jet-validation-errors class="mb-4" />
 
-        <form method="POST" action="{{ route('password.update') }}">
+        <form method="POST" action="{{ route('reset.store') }}" id="reset">
             @csrf
 
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
+            <input type="hidden" name="_method" value="PUT">
 
             <div class="mb-4 text-sm text-gray-600">
-                {{ __('Please reset your password to secure your account.') }}
+                Hi {{ auth()->user()->name }}! {{ __('Please reset your password to secure your account. You will be redirected to the Login Page after you click the reset password button.') }}
                 {{-- {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }} --}}
             </div>
 
             <div class="block">
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
-            </div>
 
             <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}" />
+                <x-jet-label for="password" value="{{ __('New Password') }}" />
                 <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             </div>
 

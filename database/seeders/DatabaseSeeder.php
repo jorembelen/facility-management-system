@@ -54,5 +54,8 @@ class DatabaseSeeder extends Seeder
         WorkCategory::create([
             'name' => 'Preventive Maintenance',
         ]);
+        WorkCategory::create([
+            'name' => 'Emergency',
+        ]);
     }
 }

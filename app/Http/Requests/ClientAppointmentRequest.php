@@ -26,10 +26,20 @@ class ClientAppointmentRequest extends FormRequest
         return [
             'user_id' => 'required',
             'work_category_id' => 'required',
+            'date' => 'required|date',
             'schedule_time' => 'required',
             'job_description' => 'required',
             'documents' => 'mimes:zip,doc,docx,xlsx,xls,pdf|max:2048M',
             'images.*' => 'image|mimes:jpeg,bmp,png,gif,svg,jpg|max:5048',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'user_id.required' => 'The tenant field is required.',
+            'work_category_id.required' => 'The job category is required.',
+        ];
+    }
+
 }

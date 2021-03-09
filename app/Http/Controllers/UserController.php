@@ -113,7 +113,7 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, $id)
     {
         $user = User::findOrFail($id);
-       
+        $data = $request->all();
     
         if(trim($request->password) == '') {
             

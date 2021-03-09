@@ -17,7 +17,7 @@ class AdminAccess
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(auth()->check() && auth()->user()->role == 'super_admin') {
+        if(auth()->check() && auth()->user()->role != 'tenant') {
             
         return $next($request); 
     }

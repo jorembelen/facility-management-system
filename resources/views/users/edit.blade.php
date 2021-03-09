@@ -28,7 +28,7 @@
                     <div class="col-md-8 mt-1">
                         <select name="role" class="form-control select2">
                             <option value="{{ $user->role }}">{{ $user->role }}</option>
-                            <option value="user">User</option>
+                            <option value="tenant">Tenant</option>
                             <option value="scheduler">scheduler</option>
                             <option value="supervisor">supervisor</option>
                             <option value="representative">representative</option>
@@ -40,7 +40,7 @@
                 <div class="form-group row">
                     <label for="name" class="col-md-3 mt-1 ml-1 col-form-label">Status</label>
                     <div class="col-md-8 mt-1">
-                        <select name="role" class="form-control select2">
+                        <select name="status" class="form-control select2">
                             <option value="{{ $user->status }}">
                                 @if ($user->status == 0)
                                    Inactive 

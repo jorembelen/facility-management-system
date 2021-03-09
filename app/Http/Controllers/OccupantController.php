@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CheckinRequest;
 use App\Http\Requests\OccupantStoreRequest;
 use App\Imports\OccupantsImport;
+use App\Mail\TenantActivation;
 use App\Models\Building;
 use App\Models\Checkout;
 use App\Models\Occupancy;
 use App\Models\Occupant;
 use App\Models\User;
+use App\Notifications\CheckinNotification;
+use App\Notifications\TenantCheckinNotification;
+use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -59,16 +64,31 @@ class OccupantController extends Controller
         $checkin = new Occupancy();
 
         $data = $request->all();;
-        $checkin->create($data);
+        // $checkin->create($data);
 
         // Update Tenant
-        $user = User::whereid($request->tenant_id)
-        ->update(array('is_tenant' => 1, 'status' => 1));
+        // $user = User::whereid($request->tenant_id)
+        // ->update(array('is_tenant' => 1, 'status' => 1));
 
+        $tenant = User::findOrFail($request->tenant_id);
+        $name = 'Greetings ' .$tenant->name.'!';
+        $email = $tenant->email;
         // Update Facility Status
-        $user = Building::whereid($request->building_id)
-        ->update(array('status' => 1, 'tenant_id' => $request->tenant_id));
+        // $user = Building::whereid($request->building_id)
+        // ->update(array('status' => 1, 'tenant_id' => $request->tenant_id));
 
+        $url = route('login');
+        $tenants = [
+            'greetings' => $name,
+            'body' => 'Welcome to Sadara Facility Operation & Maintenance System',
+            'actionText' => 'Go to site',
+            'actionURL' => url($url),
+            'thanks' => 'Please click the button to visit the site',
+        ];
+        // return $tenants;
+        Mail::to($email)->send(new TenantActivation($tenant));
+        //    \Notification::send($email, new CheckinNotification($tenants));
+        //    \Notification::send('mail', $email)->notify(new TenantCheckinNotification($tenants));
         Alert::toast('Tenant was Checked In successfully!', 'success');
 
         return redirect('tenants-checkin');

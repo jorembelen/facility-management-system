@@ -37,7 +37,9 @@
                         <select name="category" class="form-control select2">
                             <option value="">Select Work Category</option>
                             @foreach ($categories as $category)
+                            @if ($category->id != 8)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endif
                             @endforeach
                        </select>
                     </div>
