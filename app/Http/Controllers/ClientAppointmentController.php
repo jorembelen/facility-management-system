@@ -6,6 +6,7 @@ use App\Http\Requests\CancelAppointmentRequest;
 use App\Http\Requests\ClientAppointmentRequest;
 use App\Http\Requests\ClientGetAppointmentRequest;
 use App\Http\Requests\SurveyRequest;
+use App\Mail\AdminAppointmentMail;
 use App\Models\Appointment;
 use App\Models\Building;
 use App\Models\ClientAppointment;
@@ -19,6 +20,7 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Intervention\Image\Facades\Image;
 use DB;
+use Illuminate\Support\Facades\Mail;
 
 class ClientAppointmentController extends Controller
 {
@@ -119,7 +121,8 @@ class ClientAppointmentController extends Controller
      */
     public function store(ClientAppointmentRequest $request)
     {
-         
+     return   $email = User::whererole('scheduler || supervisor')->get();
+        
         $data = new ClientAppointment();
         $all_data = $request->all();
 
@@ -184,10 +187,13 @@ class ClientAppointmentController extends Controller
        
       $data->create($all_data);
 
+
        $product = Schedule::wherework_category_id($request->work_category_id)
        ->where('date', $request->date)
        ->where('time', $request->schedule_time)
        ->update(array('slot' => $new_slot));
+
+       Mail::to($email)->send(new AdminAppointmentMail($data));
        
        Alert::toast('Transaction was successfully created!', 'success');
     }

@@ -25,7 +25,7 @@ class CancelAppointmentRequest extends FormRequest
     {
         return [
             'cancellation_reason' => 'required',
-            'cancellation_comments' => 'with_idrequired',
+            'cancellation_comments' => 'required_if:cancellation_reason,Others|min:3',
         ];
     }
 }

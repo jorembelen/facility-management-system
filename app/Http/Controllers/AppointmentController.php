@@ -30,6 +30,7 @@ class AppointmentController extends Controller
         return view('admin.appointments.index', compact('appointments'));
     }
 
+
     public function emergencyCreate()
     {
         $categories = WorkCategory::all();
@@ -80,12 +81,13 @@ class AppointmentController extends Controller
 
     public function calendar()
     {
-        $appointments = Appointment::wherehas('job_order')->get();
+        $appointments = ClientAppointment::wherestatus(0)->get();
         $today = date("Y-m-d");
-       
+        // $appointments = response()->json($appointments);
         
         return view('appointments.calendar', compact('appointments', 'today'));
     }
+
     public function showAppointment($id)
     {
         $appointments = Appointment::wherejob_order_id($id)->get();

@@ -45,7 +45,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Job Description</label>
-                        <textarea name="job_description" class="form-control" cols="30" rows="6"></textarea>
+                        <textarea name="job_description" class="form-control" value="{{ old('job_description') }}" cols="30" rows="6"></textarea>
                     </div>
                     <div class="form-group">
                         <div class="form-group custom-file-container" data-upload-id="myImage">

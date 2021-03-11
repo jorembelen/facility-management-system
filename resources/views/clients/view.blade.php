@@ -162,7 +162,7 @@
             <form class="form-horizontal" method="POST" action="{{ route('client-appointment.cancel', $appointment->id) }}" id="cancel-create">
                 @csrf
                 <input type="hidden" name="_method" value="PUT">
-                <h4 class="mb-0 text-center">If you are sure, please select reason & click Yes to proceed!</h4>
+                <h4 class="mb-0 text-center">If you are sure, please select reason & click Yes to proceed.</h4>
             <div class="form-group mt-2">
                 <select name="cancellation_reason" class="form-control select2" id="reason_frm" >
                     <option value="">Select Reason</option>

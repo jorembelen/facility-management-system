@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'checkStatus']], func
 
     //    This is for Tenant dashboard
         Route::get('/reset/password', [LoginController::class, 'resetPassword'])->name('reset');
+        Route::get('/help', [LoginController::class, 'help']);
         Route::put('/reset/password', [LoginController::class, 'newPassword'])->name('reset.store');
 
         Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');

@@ -104,6 +104,36 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Appointments</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart">
+                    <div id="apexcharts-column" style="min-height: 365px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+@if (auth()->user()->role == 'representative')
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Appointments</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart">
+                    <div id="apexcharts-column" style="min-height: 365px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endif
 @if (auth()->user()->role == 'tenant')
 <div class="row">
@@ -214,4 +244,5 @@
     @endif
 @endif
 
+@include('charts.job_category')
 @endsection

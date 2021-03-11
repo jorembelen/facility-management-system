@@ -14,7 +14,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&amp;display=swap" rel="stylesheet">
 	<link rel="canonical" href="https://appstack.bootlab.io/tables-datatables-responsive.html" />
 	<link rel="canonical" href="https://appstack.bootlab.io/forms-advanced-inputs.html" />
-	<link rel="canonical" href="https://appstack.bootlab.io/charts-chartjs.html" />
+	{{-- <link rel="canonical" href="https://appstack.bootlab.io/charts-apexcharts.html" /> --}}
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<link href="/assets/plugins/flatpickr/custom-flatpickr.css" rel="stylesheet" type="text/css">
 	<link href="/assets/plugins/flatpickr/flatpickr.css" rel="stylesheet" type="text/css">
    <link href="/assets/plugins/file-upload/file-upload-with-preview.min.css" rel="stylesheet" type="text/css" />
@@ -75,7 +76,6 @@
              {!! JsValidator::formRequest('App\Http\Requests\CheckoutRequest', '#checkout'); !!}
              {!! JsValidator::formRequest('App\Http\Requests\CheckinRequest', '#checkin'); !!}
              {!! JsValidator::formRequest('App\Http\Requests\ResetpasswordRequest', '#reset'); !!}
-  
 
     <script>
 		document.addEventListener("DOMContentLoaded", function() {

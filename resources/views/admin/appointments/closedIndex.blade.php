@@ -48,7 +48,7 @@
                                         @if ($appointment->status == 0)
                                         <span class="badge badge-primary">Open</span>
                                         @elseif ($appointment->status == 1)
-                                        <span class="badge badge-success">Closed</span>
+                                        <span class="badge badge-danger">Closed</span>
                                         @else
                                         <span class="badge badge-danger">Cancelled</span>
                                         @endif

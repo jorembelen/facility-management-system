@@ -1,13 +1,14 @@
 @component('mail::message')
-# Welcome to Sadara Facility Operation & Maintenance System
+# Welcome to your new home {{ $tenant->name }}.
 
-{{-- Please click the link below to proceed to login page. --}}
-This is a test. = {{ $tenant->name }}
+Please click the button below to proceed to SADARA Housing login page. <br>
+ Email: {{ $tenant->email }} <br>
+ Default password: Sadara2021
 
-@component('mail::button', [ 'url' => env('APP_URL').'/login'])
-Button Text
+@component('mail::button', [ 'url' => route('login')])
+Click Here
 @endcomponent
 
 Thanks,<br>
-{{ config('app.name') }}
+{{ config('app.name') }} Admin
 @endcomponent
