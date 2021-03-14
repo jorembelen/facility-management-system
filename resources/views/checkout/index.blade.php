@@ -75,6 +75,7 @@
                 <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                 <input type="hidden" name="tenant_id" value="{{ $tenant->id }}">
                 <input type="hidden" name="building_id" value="{{ $tenant->building->id }}">
+                <input type="hidden" name="checkin_date" value="{{ $tenant->occupancy->issued_date }}">
                 <h4 class="mb-0 text-center">If you are sure, please select date & click submit to proceed!</h4><br>
             <div class="form-group mt-2">
                 <input type="text" class="form-control flatpickr flatpickr-input active" id="dateTimeFlatpickr" name="released_date" placeholder="checkout date">

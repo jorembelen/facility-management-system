@@ -7,10 +7,9 @@
 
 
   <div class="row">
-    <div class="col-xl-2"></div>
-        <div class="col-lg-6 col-xxl-6">
-            <div class="card">
-                <div class="card-header">
+      <div class="col-lg-7 col-xxl-7">
+          <div class="card">
+              <div class="card-header">
                     <div class="card-action float-right">
                         <div class="dropdown show">
                             @if (auth()->user()->role == 'tenant')
@@ -144,7 +143,85 @@
             @endif
         </div>
         
-    <div class="col-xl-2"></div>
+        {{-- For Chat --}}
+        <div class="col-lg-5 col-xxl-5">
+            <div class="card">
+            <div class="card-header">
+                <h3>Chat with us
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square align-middle mr-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </h3>
+                <a href="#" class="btn btn-primary float-right" onclick="history.go(0)"><i class="fas fa-fw fa-sync"></i> Refresh</a>
+            </div>
+            <div class="card-body">
+                <div class="row no-gutters">
+                    <div class="col-12 col-lg-12 col-xl-12">
+                        
+                        <div class="position-relative" >
+                            <div class="chat-messages p-4">
+                                
+                                @foreach ($chats as $chat)
+                                @if (auth()->user()->id != $chat->user_id)
+                                {{-- <div id="content"></div> --}}
+                                <div class="chat-message-left pb-4">
+                                    <div>
+                                        <img src="https://www.gravatar.com/avatar/'{{ $chat->user->email }}" class="rounded-circle mr-1" alt="{{ $chat->user->name }}" width="40" height="40">
+                                        <div class="text-muted small text-nowrap mt-2">{{ date('M-d-Y', strtotime($chat->created_at)) }}</div>
+                                        <div class="text-muted small text-nowrap">{{ $chat->created_at->diffForHumans() }}</div>
+                                    </div>
+                                    <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+                                        <div class="font-weight-bold mb-1">{{ $chat->user->name }}</div>
+                                        @if (auth()->user()->id != $chat->user_id)
+                                        <p class="text-primary"> {{$chat->message}}</p>
+                                        @else
+                                        {{$chat->message}}
+                                    @endif
+                                </div>
+                            </div>
+                            @else
+                            <div class="chat-message-right pb-4">
+                                    <div>
+                                        <img src="https://www.gravatar.com/avatar/'{{ $chat->user->email }}" class="rounded-circle mr-1" alt="{{ $chat->user->name }}" width="40" height="40">
+                                        <div class="text-muted small text-nowrap mt-2">{{ date('M-d-Y', strtotime($chat->created_at)) }}</div>
+                                        <div class="text-muted small text-nowrap">{{ $chat->created_at->diffForHumans() }}</div>
+                                    </div>
+                                    <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                                        <div class="font-weight-bold mb-1">{{ $chat->user->name }}</div>
+                                        @if (auth()->user()->id != $chat->user_id)
+                                        <p class="text-primary"> {{$chat->message}}</p>
+                                        @else
+                                        {{$chat->message}}
+                                        @endif
+                                    </div>
+                                </div>
+                                @endif
+                            @endforeach
+
+                            </div>
+                        </div>
+
+                        <div class="flex-grow-0 py-3 px-4 border-top">
+                            <form class="form-horizontal form-disabled-button" method="POST" action="{{ route('chats.store') }}" id="chat-create">
+                                @csrf
+                            <div class="input-group">
+                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                    <input type="hidden" name="client_appointment_id" value="{{ $appointment->id }}">
+                                <input type="text" name="message" class="form-control" placeholder="Type your message" required>
+                                <div class="input-group-append ml-1">
+                                    <button class="btn btn-primary">Send</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            </div>
+    </div>
+    {{-- End Chat --}}
+    {{-- <div class="col-lg-5 col-xxl-5">
+        <a href="{{ route('chats.show', $appointment->id) }}" class="btn btn-primary"><i class="align-middle mr-2 fas fa-fw fa-comment-dots"></i> Chat with us</a>
+    </div> --}}
 </div>
 
 
@@ -188,3 +265,4 @@
  
 
 @endsection
+

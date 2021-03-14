@@ -18,6 +18,7 @@ class CreateCheckoutsTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('tenant_id')->constrained('users');
             $table->string('building_id');
+            $table->date('checkin_date');
             $table->date('released_date');
             $table->timestamps();
         });

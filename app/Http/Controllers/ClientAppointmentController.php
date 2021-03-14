@@ -9,6 +9,7 @@ use App\Http\Requests\SurveyRequest;
 use App\Mail\AdminAppointmentMail;
 use App\Models\Appointment;
 use App\Models\Building;
+use App\Models\Chat;
 use App\Models\ClientAppointment;
 use App\Models\Occupancy;
 use App\Models\Occupant;
@@ -97,6 +98,10 @@ class ClientAppointmentController extends Controller
         ->where('date', $request->date)
         ->get();
 
+        if($schedules->count() == 0){
+            Alert::error('Failed', 'Sorry, No available schedule on selected date!');
+            return back();
+        }
         if($request->date <= $dateAllowed)
         {
             Alert::error('Failed', 'Sorry, You cannot book appointment within 24 hours period!');
@@ -121,7 +126,7 @@ class ClientAppointmentController extends Controller
      */
     public function store(ClientAppointmentRequest $request)
     {
-     return   $email = User::whererole('scheduler || supervisor')->get();
+    //  return   $email = User::whererole('scheduler || supervisor')->get();
         
         $data = new ClientAppointment();
         $all_data = $request->all();
@@ -193,7 +198,7 @@ class ClientAppointmentController extends Controller
        ->where('time', $request->schedule_time)
        ->update(array('slot' => $new_slot));
 
-       Mail::to($email)->send(new AdminAppointmentMail($data));
+    //    Mail::to($email)->send(new AdminAppointmentMail($data));
        
        Alert::toast('Transaction was successfully created!', 'success');
     }
@@ -210,14 +215,26 @@ class ClientAppointmentController extends Controller
      */
     public function show($id)
     {
+        $chats = Chat::whereclient_appointment_id($id)->orderBy('created_at', 'asc')->get();
         $appointment = ClientAppointment::findOrFail($id);
         $photos = explode('|', $appointment->images);
 
         $today = Carbon::today();
         $dateAllowed = $today->addDays(1);
 
-        return view('clients.view', compact('appointment', 'photos', 'dateAllowed', 'dateAllowed'));
+        return view('clients.view', compact('appointment', 'photos', 'dateAllowed', 'dateAllowed', 'chats'));
     }
+
+    // public function showChat($id)
+    // {
+    //     $chats = Chat::whereclient_appointment_id($id)->orderBy('created_at', 'asc')->get();
+    //     return view('clients.view', [
+    //         'data' => $chats->all()->toJson(),
+    //     ]);
+    //     // return response()->json($chats);
+
+    //     // return view('clients.view', compact('appointment', 'photos', 'dateAllowed', 'dateAllowed', 'chats'));
+    // }
 
     /**
      * Show the form for editing the specified resource.

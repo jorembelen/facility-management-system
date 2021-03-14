@@ -34,10 +34,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         WorkCategory::create([
-            'name' => 'Appliance Technican',
+            'name' => 'Appliance Technician',
         ]);
         WorkCategory::create([
-            'name' => 'HVAC Technican',
+            'name' => 'HVAC Technician',
         ]);
         WorkCategory::create([
             'name' => 'Electrician',

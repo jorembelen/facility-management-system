@@ -51,13 +51,21 @@
                         <li class="sidebar-item"><a class="sidebar-link" href="/cancelled-appointments">Cancelled</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="/appointments">All</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="/emergency-appointment">Emergency Appointment</a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="#">Reports</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="/reports">Reports</a></li>
                     </ul>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="/calendar">
                         <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendar</span>
                     </a>
+                </li>
+                <li class="sidebar-item {{ (request()->segment(1) == 'schedules-remove') ? 'active' : '' }}">
+                    <a href="#maintenance" data-toggle="collapse" class="sidebar-link">
+                        <i class="align-middle" data-feather="aperture"></i> <span class="align-middle">Maintenance</span>
+                    </a>
+                    <ul id="maintenance" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+                        <li class="sidebar-item"><a class="sidebar-link" href="/schedules-remove">Delete Schedules</a></li>
+                    </ul>
                 </li>
             @endif          
 

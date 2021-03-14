@@ -19,6 +19,7 @@
                                 <th>Email</th>
                                 <th>Mobile No.</th>
                                 <th>Facilities Info</th>
+                                <th>Check In Date</th>
                                 <th>Check Out Date</th>
                             </tr>
                         </thead>
@@ -34,6 +35,7 @@
                                     <td>
                                         {{ $item->building->id }} - {{ $item->building->description }}
                                     </td>
+                                    <td>{{ date('M-d-Y', strtotime($item->checkin_date)) }}</td>
                                     <td>{{ date('M-d-Y', strtotime($item->released_date)) }}</td>
                          
                             </tr>

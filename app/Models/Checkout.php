@@ -17,6 +17,7 @@ class Checkout extends Model
         'user_id',
         'tenant_id',
         'building_id',
+        'checkin_date',
         'released_date',
     ];
 

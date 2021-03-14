@@ -23,6 +23,14 @@
                         <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" placeholder="Name">
                     </div>
                 </div>
+                @if (auth()->user()->role == 'super_admin')
+                <div class="form-group row">
+                    <label for="name" class="col-md-3 mt-1 ml-1 col-form-label">Username</label>
+                    <div class="col-md-8 mt-1">
+                        <input type="text" class="form-control" id="username" name="username" value="{{ $user->username }}" placeholder="Username">
+                    </div>
+                </div>
+                @endif
                 <div class="form-group row">
                     <label for="name" class="col-md-3 mt-1 ml-1 col-form-label">Role</label>
                     <div class="col-md-8 mt-1">

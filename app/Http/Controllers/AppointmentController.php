@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AppointmentStoreRequest;
 use App\Models\Appointment;
 use App\Models\Building;
+use App\Models\Chat;
 use App\Models\ClientAppointment;
 use App\Models\Employee;
 use App\Models\JobOrder;
@@ -140,9 +141,10 @@ class AppointmentController extends Controller
      */
     public function show($id)
     {
+        $chats = Chat::whereclient_appointment_id($id)->get();
         $appointment = ClientAppointment::findOrFail($id);
 
-        return view('admin.appointments.appointment_details', compact('appointment'));
+        return view('admin.appointments.appointment_details', compact('appointment', 'chats'));
     }
 
     public function info($badge)

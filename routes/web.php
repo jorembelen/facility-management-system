@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ClientAppointmentController;
 use App\Http\Controllers\EmployeeController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\JobOrderController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OccupancyController;
 use App\Http\Controllers\OccupantController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\UserController;
@@ -17,12 +19,12 @@ use App\Http\Controllers\WorkCategoryController;
 use App\Http\Middleware\AdminAccess;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 
-
-
-Route::get('/', function () {
-    return redirect('login');
-});
+Route::get('/', [ Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class, 'create']);
+// Route::get('/', function () {
+//     return redirect('login');
+// });
 
 
 Route::group(['middleware' => ['auth:sanctum', 'verified', 'checkStatus']], function() {
@@ -38,6 +40,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'checkStatus']], func
         Route::put('update-appointment/{id}', [ClientAppointmentController::class, 'updateAppointment'])->name('update');
         Route::resource('/client-appointments', ClientAppointmentController::class);
         Route::resource('/surveys', SurveyController::class);
+        Route::resource('/chats', ChatController::class);
+        Route::get('/show-chats/{id}', [ClientAppointmentController::class, 'showChat']);
+        // Route::get('/chat/{id}', Livewire::class);
         
    
                                 // This is for admin dashboard
@@ -73,6 +78,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'checkStatus']], func
 
                         Route::get('/schedules-import', [ScheduleController::class, 'importIndex']);
                         Route::post('/schedules-import', [ScheduleController::class, 'import'])->name('import.schedules');
+                        Route::get('/schedules-remove', [ScheduleController::class, 'removeSchedulesIndex'])->name('schedules.get');
+                        Route::post('/schedules-remove', [ScheduleController::class, 'removeSchedules'])->name('remove.schedule');
                         Route::resource('/schedules', ScheduleController::class);
 
                         Route::post('tenant/create', [UserController::class, 'tenantStore'])->name('tenant.create');
@@ -95,6 +102,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'checkStatus']], func
                     
                         Route::resource('/job-orders', JobOrderController::class);
                         Route::resource('/work-categories', WorkCategoryController::class);
+
+                        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
                     
                     });
 

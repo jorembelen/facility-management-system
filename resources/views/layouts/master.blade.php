@@ -118,7 +118,7 @@
 			$(this)
 				.wrap("<div class=\"position-relative\"></div>")
 				.select2({
-					placeholder: "Select value",
+					// placeholder: "Select value",
 					dropdownParent: $(this).parent()
 				});
 		})
@@ -153,6 +153,8 @@
     });
     
     </script>
+ 
+ 
 
 </body>
 
