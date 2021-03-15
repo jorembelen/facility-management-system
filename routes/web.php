@@ -21,20 +21,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
-Route::get('/', [ Laravel\Fortify\Http\Controllers\AuthenticatedSessionController::class, 'create']);
 // Route::get('/', function () {
 //     return redirect('login');
 // });
 
+// Route::get('/', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 
-Route::group(['middleware' => ['auth:sanctum', 'verified', 'checkStatus']], function() {
+Route::group(['middleware' => ['auth', 'verified', 'checkStatus']], function() {
 
     //    This is for Tenant dashboard
         Route::get('/reset/password', [LoginController::class, 'resetPassword'])->name('reset');
         Route::get('/help', [LoginController::class, 'help']);
         Route::put('/reset/password', [LoginController::class, 'newPassword'])->name('reset.store');
 
-        Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+        Route::get('/', [HomeController::class, 'index'])->name('dashboard');
         Route::get('get-schedule', [ClientAppointmentController::class, 'searchSchedule'])->name('schedule.get');
         Route::put('cancel-appointment/{id}', [ClientAppointmentController::class, 'cancel'])->name('client-appointment.cancel');
         Route::put('update-appointment/{id}', [ClientAppointmentController::class, 'updateAppointment'])->name('update');
@@ -110,3 +110,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'checkStatus']], func
 
 });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

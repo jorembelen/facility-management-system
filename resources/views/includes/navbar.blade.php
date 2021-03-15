@@ -13,12 +13,8 @@
                 </a>
      
                 <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
-                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                        <img src="{{ Auth::user()->profile_photo_url }}" class="avatar img-fluid rounded-circle mr-1" alt="{{ Auth::user()->name }}" /> 
-                    @else
                         <img src="/assets/img/avatars/avatar.jpg" class="avatar img-fluid rounded-circle mr-1" alt="{{ Auth::user()->name }}" /> 
                         <span class="text-dark">{{ Auth::user()->name }}</span>
-                    @endif
                     </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="#">Hello! {{ Auth::user()->name }}</a>

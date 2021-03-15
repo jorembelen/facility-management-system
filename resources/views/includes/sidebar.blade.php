@@ -59,17 +59,18 @@
                         <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendar</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ (request()->segment(1) == 'schedules-remove') ? 'active' : '' }}">
-                    <a href="#maintenance" data-toggle="collapse" class="sidebar-link">
-                        <i class="align-middle" data-feather="aperture"></i> <span class="align-middle">Maintenance</span>
-                    </a>
-                    <ul id="maintenance" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
-                        <li class="sidebar-item"><a class="sidebar-link" href="/schedules-remove">Delete Schedules</a></li>
-                    </ul>
-                </li>
+           
             @endif          
 
                     @if(auth()->user()->role == 'super_admin')
+                    <li class="sidebar-item {{ (request()->segment(1) == 'schedules-remove') ? 'active' : '' }}">
+                        <a href="#maintenance" data-toggle="collapse" class="sidebar-link">
+                            <i class="align-middle" data-feather="aperture"></i> <span class="align-middle">Maintenance</span>
+                        </a>
+                        <ul id="maintenance" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
+                            <li class="sidebar-item"><a class="sidebar-link" href="/schedules-remove">Delete Schedules</a></li>
+                        </ul>
+                    </li>
                     <li class="sidebar-item">
                         <a href="#imports" data-toggle="collapse" class="sidebar-link">
                             <i class="align-middle" data-feather="upload"></i> <span class="align-middle">Uploads</span>
@@ -100,7 +101,10 @@
                 </a>
                 <ul id="rep" class="sidebar-dropdown list-unstyled collapse" data-parent="#sidebar">
                     <li class="sidebar-item"><a class="sidebar-link" href="/appointments">Appointments</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">Reports</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="/facilities/occupied">Occupied Facilities</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="/facilities/vacant">Vacant Facilities</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="/tenants-checkout">Checked Out History</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="/reports">Reports</a></li>
                 </ul>
             </li>
             @endif 
@@ -110,14 +114,14 @@
                     Help</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="{{ route('logout') }}"onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            {{-- <li class="sidebar-item">
+                <a class="sidebar-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out align-middle mr-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                     Logout</span>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
                 </a>
-            </li>
+            </li> --}}
     </div>
 </nav>
