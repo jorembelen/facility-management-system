@@ -27,7 +27,7 @@
 								<h1 class="display-1 font-weight-bold">500</h1>
 								<p class="h1">Internal server error.</p>
 								<p class="h2 font-weight-normal mt-3 mb-4">The server encountered something unexpected that didn't allow it to complete the request.</p>
-								<a href="/dashboard" class="btn btn-primary btn-lg">Return to home page.</a>
+								<a href="/home" class="btn btn-primary btn-lg">Return to home page.</a>
 							</div>
 
 						</div>

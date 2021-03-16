@@ -61,11 +61,7 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
 {
-    $this->validate($request, [
-        'login'    => 'required',
-        'password' => 'required',
-    ]);
-
+// return $request->all();
     $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL ) 
         ? 'email' 
         : 'username';
@@ -74,8 +70,8 @@ class LoginController extends Controller
         $login_type => $request->input('login')
     ]);
 
-    if (Auth::attempt($request->only($login_type, 'password'))) {
-        return redirect()->intended($this->redirectPath());
+    if (Auth::attempt($request->only($login_type, 'password', 'status'))) {
+        return redirect('/home');
     }
 
     Alert::error('Failed', 'Sorry, this credentials do not match on our records!');

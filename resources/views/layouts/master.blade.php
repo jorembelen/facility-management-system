@@ -31,7 +31,9 @@
 <body data-theme="light" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="default">
 	<div class="wrapper">
         
+		@if (auth()->user()->email_verified_at)
         @include('includes.sidebar')
+		@endif
 
 		<div class="main">
 

@@ -1,40 +1,63 @@
 <?php
 
-use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\BuildingController;
-use App\Http\Controllers\ChatController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\ClientAppointmentController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\JobOrderController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\OccupancyController;
-use App\Http\Controllers\OccupantController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\SurveyController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\WorkCategoryController;
+use Livewire\Livewire;
+use Illuminate\Http\Request;
 use App\Http\Middleware\AdminAccess;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Livewire\Livewire;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\JobOrderController;
+use App\Http\Controllers\OccupantController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\OccupancyController;
+use App\Http\Controllers\UserLoginController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\WorkCategoryController;
+use App\Http\Controllers\ClientAppointmentController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
-// Route::get('/', function () {
-//     return redirect('login');
-// });
+Auth::routes();
 
-// Route::get('/', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+Route::get('/', function () {
+    return redirect('login');
+});
+
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 
 Route::group(['middleware' => ['auth', 'verified', 'checkStatus']], function() {
+    
+    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+        $request->fulfill();
+    
+        return redirect('/home');
+    })->name('verification.verify');
 
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
     //    This is for Tenant dashboard
-        Route::get('/reset/password', [LoginController::class, 'resetPassword'])->name('reset');
-        Route::get('/help', [LoginController::class, 'help']);
-        Route::put('/reset/password', [LoginController::class, 'newPassword'])->name('reset.store');
+        Route::get('/reset/password', [UserLoginController::class, 'resetPassword'])->name('reset');
+        Route::get('/help', [UserLoginController::class, 'help']);
+        Route::put('/reset/password', [UserLoginController::class, 'newPassword'])->name('reset.store');
 
-        Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+
+        // Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('get-schedule', [ClientAppointmentController::class, 'searchSchedule'])->name('schedule.get');
         Route::put('cancel-appointment/{id}', [ClientAppointmentController::class, 'cancel'])->name('client-appointment.cancel');
         Route::put('update-appointment/{id}', [ClientAppointmentController::class, 'updateAppointment'])->name('update');
@@ -42,7 +65,6 @@ Route::group(['middleware' => ['auth', 'verified', 'checkStatus']], function() {
         Route::resource('/surveys', SurveyController::class);
         Route::resource('/chats', ChatController::class);
         Route::get('/show-chats/{id}', [ClientAppointmentController::class, 'showChat']);
-        // Route::get('/chat/{id}', Livewire::class);
         
    
                                 // This is for admin dashboard
@@ -107,10 +129,5 @@ Route::group(['middleware' => ['auth', 'verified', 'checkStatus']], function() {
                     
                     });
 
-
 });
 
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

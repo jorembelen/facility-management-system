@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class LoginController extends Controller
+class UserLoginController extends Controller
 {
     
     public function resetPassword()
@@ -23,9 +23,9 @@ class LoginController extends Controller
            'password' => bcrypt($request->password)
            ));
 
-    Alert::toast('Your appointment was successfully cancelled!', 'success');
+    Alert::toast('Your password was successfully updated!', 'success');
 
-        return redirect('/dashboard');
+        return redirect('/home');
     }
 
     public function help()

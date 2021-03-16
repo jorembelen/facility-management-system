@@ -1,6 +1,6 @@
 <nav id="sidebar" class="sidebar">
     <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" href="/dashboard">
+        <a class="sidebar-brand" href="/home">
             <h2 class="align-middle mr-3"><img src="{{ asset('assets/img/sadara.png') }}" width="100" height="35">  FMS</h2></a>
             
         <ul class="sidebar-nav">
@@ -8,7 +8,7 @@
                 Navigate
             </li>
             <li class="sidebar-item {{ (request()->segment(1) == 'dashboard') ? 'active' : '' }}">
-                <a class="sidebar-link" href="/dashboard">
+                <a class="sidebar-link" href="/home">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid align-middle mr-2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                     Dashboard</span>
                 </a>
@@ -114,7 +114,7 @@
                     Help</span>
                 </a>
             </li>
-            {{-- <li class="sidebar-item">
+            <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out align-middle mr-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                     Logout</span>
@@ -122,6 +122,6 @@
                         @csrf
                     </form>
                 </a>
-            </li> --}}
+            </li>
     </div>
 </nav>

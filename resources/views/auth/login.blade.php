@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +18,6 @@
     <!-- END GLOBAL MANDATORY STYLES -->
     <link rel="stylesheet" type="text/css" href="/assets/login/css/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="/assets/login/css/switches.css">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="form">
     @include('sweetalert::alert')
@@ -36,6 +34,7 @@
                         
                         <form class="text-left" method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}" id="login">
                         @csrf
+                        <input type="hidden" name="status" value="1">
                             <div class="form">
 
                                 <div id="username-field" class="field-wrapper input">
@@ -88,8 +87,6 @@
     
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="/assets/login/js/form-2.js"></script>
-      <!-- Scripts -->
-      <script src="{{ asset('js/app.js') }}"></script>
 
           <!-- Laravel Javascript Validation -->
           <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>

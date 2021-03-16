@@ -14,11 +14,11 @@
                         </div>
                     @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
+                    <h4>Welcome to Sadara Facility Operation & Maintenance System!</h4>
+                   <p>Before getting started, please verify your email address by clicking the link below. If you didn't receive any email, we will gladly send you another.</p>,
+                    <form class="d-inline" method="POST" action="{{ route('verification.send') }}">
                         @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                        <button type="submit" class="btn btn-secondary align-baseline">{{ __('CLICK TO RECEIVE EMAIL') }}</button>.
                     </form>
                 </div>
             </div>
